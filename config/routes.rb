@@ -4,4 +4,10 @@ Rails.application.routes.draw do
   resources :places, only: [:index, :show]
   resources :itineraries
   resource :profile, only: [:show, :edit, :update]
+  resource :verification, only: [:new, :create] do
+    collection do
+      get :verify
+      post :confirm
+    end
+  end
 end
