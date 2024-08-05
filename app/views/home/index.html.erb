@@ -1,2 +1,20 @@
+<%#= react_component("SplashScreen") %>
+
 <h1>Welcome to Travenor</h1>
 <p>Explore the beautiful world!</p>
+
+<nav>
+  <% if user_signed_in? %>
+    <p>Logout form should be here:</p>
+    <%= form_for(:user, url: destroy_user_session_path, method: :delete) do %>
+       <%= submit_tag 'Logout' %>
+    <% end %>
+
+    <% if current_user.phone_number.blank? || current_user.verification_code.present? %>
+      <%= link_to 'Verify Phone Number', new_verification_path %>
+    <% end %>
+  <% else %>
+    <%= link_to 'Login', new_user_session_path %>
+    <%= link_to 'Sign up', new_user_registration_path %>
+  <% end %>
+</nav>

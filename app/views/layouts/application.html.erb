@@ -12,10 +12,10 @@
 <body>
   <nav>
     <% if user_signed_in? %>
-      <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+      <%#= link_to 'Logout', destroy_user_session_path, method: :delete %>
 
       <% if current_user.phone_number.blank? || current_user.verification_code.present? %>
-        <%= link_to 'Verify Phone Number', new_verification_path %>
+        <%#= link_to 'Verify Phone Number', new_verification_path %>
       <% end %>
     <% else %>
       <%= link_to 'Login', new_user_session_path %>
