@@ -63,48 +63,6 @@
   border-radius: 16px;
 }
 
-.onboard .text-wrapper-2 {
-  position: absolute;
-  top: 18px;
-  left: 126px;
-  font-family: "SF UI Display-Semibold", Helvetica;
-  font-weight: 400;
-  color: var(--lightwhite-color);
-  font-size: 16px;
-  text-align: center;
-  letter-spacing: 0;
-  line-height: 20px;
-  white-space: nowrap;
-}
 
-.onboard .group-2 {
-  position: absolute;
-  width: 309px;
-  height: 194px;
-  top: 484px;
-  left: 33px;
-}
 
-.onboard .group-3 {
-  position: absolute;
-  width: 311px;
-  height: 163px;
-  top: 0;
-  left: 0;
-}
 
-.onboard .group-4 {
-  position: absolute;
-  width: 311px;
-  height: 84px;
-  top: 0;
-  left: 0;
-}
-
-.onboard .life-is-short-and {
-  position: absolute;
-  width: 309px;
-  top: 0;
-  left: 0;
-  font-family: "Geometr415 Blk BT-Black", Helvetica;
-  font
