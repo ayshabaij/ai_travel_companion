@@ -3,7 +3,7 @@
  *= require_self
  *= require home
  */
-.splash-screen, .onboarding-screen, .auth-screen {
+/*.splash-screen, .onboarding-screen, .auth-screen {
   text-align: center;
   padding: 20px;
 }
@@ -32,4 +32,4 @@
 .btn-primary {
   background-color: #ff6f61;
   border-color: #ff6f61;
-}
+}*/

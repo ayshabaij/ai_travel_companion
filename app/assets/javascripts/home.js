@@ -1,20 +1,21 @@
 document.addEventListener('DOMContentLoaded', function() {
   const splashScreen = document.getElementById('splash-screen');
   const onboardingScreens = document.getElementById('onboarding-screens');
-  const authScreens = document.getElementById('auth-screens');
+  const authScreen = document.getElementById('auth-screen');
 
-  const onboardingSteps = document.querySelectorAll('.onboarding-screen');
+  const onboardingSteps = onboardingScreens.children;
   let currentStep = 0;
 
+  // Show splash screen for 3 seconds
   setTimeout(() => {
-    splashScreen.style.display = 'none';
-    onboardingScreens.style.display = 'flex';
+    splashScreen.classList.add('hidden');
+    onboardingScreens.classList.remove('hidden');
     showOnboardingStep(currentStep);
-  }, 10000); // Show splash screen for 3 seconds
+  }, 3000); // 3000 milliseconds = 3 seconds
 
   function showOnboardingStep(step) {
-    onboardingSteps.forEach((screen, index) => {
-      screen.style.display = index === step ? 'flex' : 'none';
+    Array.from(onboardingSteps).forEach((screen, index) => {
+      screen.classList.toggle('active', index === step);
     });
   }
 
@@ -29,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   document.getElementById('get-started').addEventListener('click', function() {
-    onboardingScreens.style.display = 'none';
-    authScreens.style.display = 'flex';
+    onboardingScreens.classList.add('hidden');
+    authScreen.classList.remove('hidden');
   });
 });

@@ -1,13 +1,13 @@
 <div id="app">
-  <div id="splash-screen">
+  <div id="splash-screen" class="splash-screen">
     <%= render 'home/splash' %>
   </div>
-  <#div id="onboarding-screens" style="display: none;">
+  <div id="onboarding-screens" class="onboarding-screen hidden">
     <%= render 'home/onboarding1' %>
     <%= render 'home/onboarding2' %>
     <%= render 'home/onboarding3' %>
-  <#/div>
-  <div id="auth-screen" style="display: none;">
+  </div>
+  <div id="auth-screen" class="auth-screen hidden">
     <%= render 'home/auth' %>
   </div>
 </div>
