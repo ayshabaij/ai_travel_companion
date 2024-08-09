@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const onboardingScreens = document.getElementById('onboarding-screens');
   const authScreen = document.getElementById('auth-screen');
 
-  const onboardingSteps = onboardingScreens.children;
+  const onboardingSteps = document.querySelectorAll('.onboarding-step');
   let currentStep = 0;
 
   // Show splash screen for 3 seconds
@@ -11,26 +11,31 @@ document.addEventListener('DOMContentLoaded', function() {
     splashScreen.classList.add('hidden');
     onboardingScreens.classList.remove('hidden');
     showOnboardingStep(currentStep);
+    startOnboardingCarousel();
   }, 3000); // 3000 milliseconds = 3 seconds
 
   function showOnboardingStep(step) {
-    Array.from(onboardingSteps).forEach((screen, index) => {
-      screen.classList.toggle('active', index === step);
+    onboardingSteps.forEach((screen, index) => {
+      screen.classList.remove('active', 'slide-out-left');
+      if (index === step) {
+        screen.classList.add('active');
+      } else if (index < step) {
+        screen.classList.add('slide-out-left');
+      }
     });
   }
 
-  document.getElementById('next1').addEventListener('click', function() {
-    currentStep = 1;
-    showOnboardingStep(currentStep);
-  });
-
-  document.getElementById('next2').addEventListener('click', function() {
-    currentStep = 2;
-    showOnboardingStep(currentStep);
-  });
-
-  document.getElementById('get-started').addEventListener('click', function() {
-    onboardingScreens.classList.add('hidden');
-    authScreen.classList.remove('hidden');
-  });
+  function startOnboardingCarousel() {
+    setInterval(() => {
+      currentStep = (currentStep + 1) % onboardingSteps.length;
+      showOnboardingStep(currentStep);
+      // If it's the last step, transition to the auth screen after showing it
+      if (currentStep === 0) {
+        setTimeout(() => {
+          onboardingScreens.classList.add('hidden');
+          authScreen.classList.remove('hidden');
+        }, 3000); // 3000 milliseconds for the last step display time
+      }
+    }, 3000); // 3000 milliseconds for each step display time
+  }
 });
