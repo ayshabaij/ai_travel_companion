@@ -1,18 +1,44 @@
-<h1>Welcome to Travenor</h1>
-<p>Explore the beautiful world!</p>
+<div id="app">
+  <div id="splash-screen" class="splash-screen">
+    <%= render 'home/splash' %>
+  </div>
+  <div id="onboarding-screens" class="onboarding-screen hidden">
+    <div class="onboarding-step" id="onboarding1">
+      <%= render 'home/onboarding1' %>
+    </div>
+    <div class="onboarding-step" id="onboarding2">
+      <%= render 'home/onboarding2' %>
+    </div>
+    <div class="onboarding-step" id="onboarding3">
+      <%= render 'home/onboarding3' %>
+    </div>
+  </div>
+  <div id="auth-screen" class="auth-screen hidden">
+    <%= render 'home/auth' %>
+  </div>
+</div>
+<style type="text/css">
+  .onboarding-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
 
-<nav>
-  <% if user_signed_in? %>
-    <p>Logout form should be here:</p>
-    <%= form_for(:user, url: destroy_user_session_path, method: :delete) do %>
-       <%= submit_tag 'Logout' %>
-    <% end %>
+.onboarding-screen > .onboarding-step {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(100%);
+  transition: transform 0.5s ease-in-out;
+  background-color: white; /* Added background color for visibility */
+}
 
-    <% if current_user.phone_number.blank? || current_user.verification_code.present? %>
-      <%= link_to 'Verify Phone Number', new_verification_path %>
-    <% end %>
-  <% else %>
-    <%= link_to 'Login', new_user_session_path %>
-    <%= link_to 'Sign up', new_user_registration_path %>
-  <% end %>
-</nav>
+.onboarding-screen > .onboarding-step.active {
+  transform: translateX(0);
+}
+
+.onboarding-screen > .onboarding-step.slide-out-left {
+  transform: translateX(-100%);
+}
+</style>

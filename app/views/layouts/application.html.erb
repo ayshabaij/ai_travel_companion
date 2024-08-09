@@ -1,27 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Travenor</title>
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
-  <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
-
 <body>
-  <nav>
-    <% if user_signed_in? %>
-      <%#= link_to 'Logout', destroy_user_session_path, method: :delete %>
-
-      <% if current_user.phone_number.blank? || current_user.verification_code.present? %>
-        <%#= link_to 'Verify Phone Number', new_verification_path %>
-      <% end %>
-    <% else %>
-      <%= link_to 'Login', new_user_session_path %>
-      <%= link_to 'Sign up', new_user_registration_path %>
-    <% end %>
-  </nav>
-  <%= yield %>
+  <div id="app">
+    <%= yield %>
+  </div>
 </body>
 </html>
