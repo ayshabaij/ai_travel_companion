@@ -1,0 +1,110 @@
+.onboarding-screen,
+.auth-screen {
+  background-color: white;
+}
+
+.onboarding-screen img,
+.splash-screen img {
+  max-width: 80%;
+}
+
+.onboard {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.onboard .div {
+  background-color: #ffffff;
+  width: 375px;
+  height: 812px;
+  position: relative;
+}
+
+.onboard .overlap {
+  width: 375px;
+  height: 444px;
+  background-image: url(./img/afbea499038243-1.png);
+  background-size: 100% 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.onboard .text-wrapper {
+  position: absolute;
+  top: 55px;
+  left: 325px;
+  font-family: "Gill Sans MT-Regular", Helvetica;
+  font-weight: 400;
+  color: var(--lightbg-color);
+  font-size: 18px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.onboard .group {
+  position: absolute;
+  width: 337px;
+  height: 56px;
+  top: 716px;
+  left: 20px;
+}
+
+.onboard .div-wrapper {
+  position: relative;
+  width: 335px;
+  height: 56px;
+  background-color: #24baec;
+  border-radius: 16px;
+}
+
+.onboard .text-wrapper-2 {
+  position: absolute;
+  top: 18px;
+  left: 126px;
+  font-family: "SF UI Display-Semibold", Helvetica;
+  font-weight: 400;
+  color: var(--lightwhite-color);
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.onboard .group-2 {
+  position: absolute;
+  width: 309px;
+  height: 194px;
+  top: 484px;
+  left: 33px;
+}
+
+.onboard .group-3 {
+  position: absolute;
+  width: 311px;
+  height: 163px;
+  top: 0;
+  left: 0;
+}
+
+.onboard .group-4 {
+  position: absolute;
+  width: 311px;
+  height: 84px;
+  top: 0;
+  left: 0;
+}
+
+.onboard .life-is-short-and {
+  position: absolute;
+  width: 309px;
+  top: 0;
+  left: 0;
+  font-family: "Geometr415 Blk BT-Black", Helvetica;
+  font
