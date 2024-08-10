@@ -1,26 +1,382 @@
-<h2>Log in</h2>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, width=device-width">
+  
+  <link rel="stylesheet"  href="./index.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF Pro Text:wght@600&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abhaya Libre:wght@400;700&display=swap" />
+  
+  
+  
+</head>
+<body>
+  
+  <div class="sign-in">
+    <div class="arrow-parent">
+      <img class="arrow-icon" alt="" src="/assets/Arrow.svg">
+      
+      <div class="group-parent">
+        <div class="group-container">
+          <div class="sign-in-now-parent">
+            <b class="sign-in-now">Sign in now</b>
+            <div class="please-sign-in">Please sign in to continue our app</div>
+          </div>
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+          <div class="group-div">
+            <div class="group-parent1">
+              <div class="rectangle-wrapper">
+                <%= f.email_field :email, autofocus: true, autocomplete: "email" , class: ' group-child'%>
+              </div>
+              <div class="rectangle-parent">
+                <%= f.password_field :password, autocomplete: "current-password", class: ' group-child' %>
+                <img class="eyeicon" alt="" src="/assets/Icon.svg">
+                
+              </div>
+            </div>
+            <b class="forget-password">Forget Password?</b>
+          </div>
+        </div>
+        <div class="group-parent2">
+          <div class="group-inner">
+          </div>
+          <%#= f.submit "Log in" %>
+          <b class="sign-in1"><%= f.submit "Log in", class:'rectangle-wrapper group-inner' %></b>
+          <div class="or-connect-parent">
+            <div class="or-connect">Or connect</div>
+            <div class="dont-have-an-account-parent">
+              <div class="dont-have-an">Don’t have an account?</div>
+              <b class="sign-up">Sign up</b>
+            </div>
+          </div>
+        </div>
+        <% end %>
+        <div class="group-parent3">
+          <img class="group-icon" alt="" src="/assets/Group 335.svg">
+          
+          <img class="group-child1" alt="" src="Group 334.svg">
+          
+          <img class="group-child2" alt="" src="Group 332.svg">
+          
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
+    <div class="home-indicator">
+      <div class="home-indicator1">
+      </div>
+    </div>
   </div>
-<% end %>
+  
+  
+  
+  
+</body>
+</html>
 
 <%= render "devise/shared/links" %>
+
+<style type="text/css">
+ .border {
+  position: absolute;
+  top: 0px;
+  right: 2.3px;
+  border-radius: 2.67px;
+  border: 1px solid #1b1e28;
+  box-sizing: border-box;
+  width: 22px;
+  height: 11.3px;
+  opacity: 0.35;
+  mix-blend-mode: normal;
+}
+.cap-icon {
+  position: absolute;
+  top: 3.67px;
+  right: 0px;
+  width: 1.3px;
+  height: 4px;
+  opacity: 0.4;
+  mix-blend-mode: normal;
+}
+.capacity {
+  position: absolute;
+  top: 2px;
+  right: 4.3px;
+  border-radius: 1.33px;
+  background-color: #1b1e28;
+  width: 18px;
+  height: 7.3px;
+}
+.battery {
+  position: absolute;
+  top: 19.33px;
+  right: 18.37px;
+  width: 24.3px;
+  height: 11.3px;
+}
+.wifi-icon {
+  position: relative;
+  width: 14.7px;
+  height: 11px;
+}
+.cellular-connection-icon {
+  position: relative;
+  width: 16.3px;
+  height: 10.7px;
+}
+.time {
+  position: absolute;
+  top: calc(50% - 7.5px);
+  left: 0px;
+  font-weight: 600;
+  display: inline-block;
+  width: 54px;
+}
+.time-style {
+  position: absolute;
+  top: 12px;
+  left: 21px;
+  width: 54px;
+  height: 21px;
+}
+.status-bar {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 375px;
+  height: 48px;
+}
+.arrow-icon {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 44px;
+  height: 44px;
+}
+.sign-in-now {
+  position: absolute;
+  top: 0px;
+  left: 47px;
+  line-height: 34px;
+}
+.please-sign-in {
+  position: absolute;
+  top: 46px;
+  left: 0px;
+  font-size: 16px;
+  line-height: 20px;
+  color: #7d848d;
+}
+.sign-in-now-parent {
+  position: absolute;
+  top: 0px;
+  left: 57px;
+  width: 220px;
+  height: 66px;
+}
+.group-child {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-radius: 14px;
+  background-color: #f7f7f9;
+  width: 335px;
+  height: 56px;
+}
+.rectangle-wrapper {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 335px;
+  height: 56px;
+}
+.eyeicon {
+  position: absolute;
+  height: 42.86%;
+  width: 7.16%;
+  top: 28.57%;
+  right: 4.78%;
+  bottom: 28.57%;
+  left: 88.06%;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+}
+.rectangle-parent {
+  position: absolute;
+  top: 80px;
+  left: 0px;
+  width: 335px;
+  height: 56px;
+}
+.group-parent1 {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 335px;
+  height: 136px;
+}
+.forget-password {
+  position: absolute;
+  top: 152px;
+  left: 232px;
+  line-height: 16px;
+}
+.group-div {
+  position: absolute;
+  top: 106px;
+  left: 0px;
+  width: 335px;
+  height: 168px;
+  text-align: right;
+  font-size: 14px;
+  color: #ff7029;
+}
+.group-container {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 335px;
+  height: 274px;
+}
+.group-inner {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-radius: 16px;
+  background-color: #ff6b6b;
+  width: 335px;
+  height: 56px;
+}
+.sign-in1 {
+  position: absolute;
+  top: 18px;
+  left: 144px;
+  line-height: 20px;
+}
+.or-connect {
+  position: absolute;
+  top: 36px;
+  left: 65px;
+  line-height: 16px;
+}
+.dont-have-an {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  line-height: 16px;
+}
+.sign-up {
+  position: absolute;
+  top: 0px;
+  left: 151px;
+  line-height: 16px;
+  color: #ff7029;
+}
+.dont-have-an-account-parent {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 196px;
+  height: 16px;
+}
+.or-connect-parent {
+  position: absolute;
+  top: 96px;
+  left: 68px;
+  width: 196px;
+  height: 52px;
+  text-align: left;
+  font-size: 14px;
+  color: #707b81;
+}
+.group-parent2 {
+  position: absolute;
+  top: 314px;
+  left: 0px;
+  width: 335px;
+  height: 148px;
+  font-size: 16px;
+  color: #fff;
+}
+.group-icon {
+  position: absolute;
+  top: 0px;
+  left: 128px;
+  width: 44px;
+  height: 44px;
+}
+.group-child1 {
+  position: absolute;
+  top: 0px;
+  left: 64px;
+  width: 44px;
+  height: 44px;
+}
+.group-child2 {
+  position: absolute;
+  height: 100%;
+  width: 25.58%;
+  top: 0%;
+  right: 74.42%;
+  bottom: 0%;
+  left: 0%;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+}
+.group-parent3 {
+  position: absolute;
+  top: 562px;
+  left: 81px;
+  width: 172px;
+  height: 44px;
+}
+.group-parent {
+  position: absolute;
+  top: 84px;
+  left: 0px;
+  width: 335px;
+  height: 606px;
+}
+.arrow-parent {
+  position: absolute;
+  top: 56px;
+  left: 20px;
+  width: 335px;
+  height: 690px;
+  font-size: 26px;
+  font-family: 'Abhaya Libre';
+}
+.home-indicator1 {
+  position: absolute;
+  bottom: 8px;
+  left: calc(50% - 66.5px);
+  border-radius: 100px;
+  background-color: #1b1e28;
+  width: 134px;
+  height: 5px;
+}
+.home-indicator {
+  position: absolute;
+  top: 778px;
+  left: calc(50% - 187.5px);
+  width: 375px;
+  height: 34px;
+}
+.sign-in {
+  width: 100%;
+  position: relative;
+  border-radius: 30px;
+  background-color: #fff;
+  height: 812px;
+  overflow: hidden;
+  text-align: center;
+  font-size: 15px;
+  color: #1b1e28;
+  font-family: 'SF Pro Text';
+}
+
+
+</style>

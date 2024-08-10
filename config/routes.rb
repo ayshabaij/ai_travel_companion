@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
   devise_for :users
-  root to: 'home#index'
+
+  authenticated :user do
+    root 'home#index', as: :authenticated_root
+  end
+
+  unauthenticated :user do
+    root 'home#index', as: :unauthenticated_root
+  end
+
   resources :places, only: [:index, :show]
   resources :itineraries
   resource :profile, only: [:show, :edit, :update]
