@@ -34,7 +34,7 @@ gem 'pundit'
 gem 'twilio-ruby'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'mail'
-gem 'rubocop', require: false
+gem 'rubocop'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
