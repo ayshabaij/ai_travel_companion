@@ -38,13 +38,13 @@
         </div>
       </div>
     </div>
-    <div class="rectangle-group">
+    <div class="rectangle-group" onclick="showPartial('onboarding2')">
       <div class="group-childd1">
       </div>
       <b class="next">Get Started</b>
     </div>
 
-    <div class="skip">Skip</div>
+    <div class="skip" onclick="navigateToSignIn()">Skip</div>
     <div class="home-indicator">
       <div class="home-indicator1">
       </div>
@@ -52,7 +52,12 @@
   </div>
 
 
+ <script>
 
+    function navigateToSignIn() {
+      window.location.href = 'http://localhost:3000/users/sign_in';
+    }
+  </script>
 
 </body>
 </html>

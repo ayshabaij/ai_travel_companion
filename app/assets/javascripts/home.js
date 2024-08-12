@@ -29,13 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(() => {
       currentStep = (currentStep + 1) % onboardingSteps.length;
       showOnboardingStep(currentStep);
-      // If it's the last step, transition to the auth screen after showing it
-      if (currentStep === 0) {
-        setTimeout(() => {
-          onboardingScreens.classList.add('hidden');
-          authScreen.classList.remove('hidden');
-        }, 3000); // 3000 milliseconds for the last step display time
-      }
     }, 3000); // 3000 milliseconds for each step display time
   }
 });

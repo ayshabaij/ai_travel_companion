@@ -15,7 +15,7 @@
 </head>
 <body>
     
-    <div class="onboard-2">
+    <div class="onboard-2" id='onboard-2'>
         <img class="f47f9144194941-1-icon" alt="" src="/assets/7f47f9144194941 1.png">
         
         <div class="group-parent">
@@ -42,7 +42,7 @@
             <b class="next">Next</b>
         </div>
 
-        <div class="skip">Skip</div>
+        <div class="skip" onclick="navigateToSignIn()">Skip</div>
         <div class="home-indicator">
             <div class="home-indicator1">
             </div>
@@ -50,7 +50,12 @@
     </div>
     
     
-    
+    <script>
+
+    function navigateToSignIn() {
+      window.location.href = 'http://localhost:3000/users/sign_in';
+    }
+  </script>
     
 </body>
 </html>
