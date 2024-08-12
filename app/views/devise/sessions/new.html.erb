@@ -7,16 +7,11 @@
   <link rel="stylesheet"  href="./index.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF Pro Text:wght@600&display=swap" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abhaya Libre:wght@400;700&display=swap" />
-  
-  
-  
 </head>
 <body>
-  
   <div class="sign-in">
     <div class="arrow-parent">
       <img class="arrow-icon" alt="" src="/assets/Arrow.svg">
-      
       <div class="group-parent">
         <div class="group-container">
           <div class="sign-in-now-parent">
@@ -24,43 +19,30 @@
             <div class="please-sign-in">Please sign in to continue our app</div>
           </div>
           <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-
           <div class="group-div">
             <div class="group-parent1">
               <div class="rectangle-wrapper">
-                <%= f.email_field :email, autofocus: true, autocomplete: "email" , class: ' group-child'%>
+                <%= f.email_field :email, autofocus: true, autocomplete: "email" , class: 'group-child'%>
               </div>
               <div class="rectangle-parent">
-                <%= f.password_field :password, autocomplete: "current-password", class: ' group-child' %>
+                <%= f.password_field :password, autocomplete: "current-password", class: 'group-child' %>
                 <img class="eyeicon" alt="" src="/assets/Icon.svg">
-                
               </div>
             </div>
-            <b class="forget-password">Forget Password?</b>
+            <%#<b class="forget-password">Forget Password?</b>%>
           </div>
         </div>
-        <div class="group-parent2">
-          <div class="group-inner">
-          </div>
-          <%#= f.submit "Log in" %>
-          <b class="sign-in1"><%= f.submit "Log in", class:'rectangle-wrapper group-inner' %></b>
+        <center><div class="group-parent2">
+          <b class=""><%= f.submit "Log in", class:'rectangle-wrapper group-inner' %></b>
           <div class="or-connect-parent">
-            <div class="or-connect">Or connect</div>
             <div class="dont-have-an-account-parent">
-              <div class="dont-have-an">Don’t have an account?</div>
-              <b class="sign-up">Sign up</b>
+              <div class="dont-have-an ">Don’t have an account?</div><br>
+              <br><br>
+              <%= render "devise/shared/links" %>
             </div>
           </div>
-        </div>
+        </div></center>
         <% end %>
-        <div class="group-parent3">
-          <img class="group-icon" alt="" src="/assets/Group 335.svg">
-          
-          <img class="group-child1" alt="" src="Group 334.svg">
-          
-          <img class="group-child2" alt="" src="Group 332.svg">
-          
-        </div>
       </div>
     </div>
     <div class="home-indicator">
@@ -68,14 +50,8 @@
       </div>
     </div>
   </div>
-  
-  
-  
-  
 </body>
 </html>
-
-<%= render "devise/shared/links" %>
 
 <style type="text/css">
  .border {
@@ -183,6 +159,7 @@
   background-color: #f7f7f9;
   width: 335px;
   height: 56px;
+  border: none; /* Remove black border */
 }
 .rectangle-wrapper {
   position: absolute;
@@ -248,6 +225,7 @@
   background-color: #ff6b6b;
   width: 335px;
   height: 56px;
+  border: none; /* Remove black border */
 }
 .sign-in1 {
   position: absolute;
@@ -377,6 +355,13 @@
   color: #1b1e28;
   font-family: 'SF Pro Text';
 }
+a {
+  color: #ff7029; /* Adjust color as needed */
+  text-decoration: none; /* Remove underline if necessary */
+}
 
+a:hover {
+  text-decoration: underline; /* Add hover effect if needed */
+}
 
 </style>
