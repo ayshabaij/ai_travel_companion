@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'profiles/setup'
+  get 'profiles/update_setup'
   devise_for :users
 
   authenticated :user do
