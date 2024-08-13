@@ -1,16 +1,269 @@
-<h2>Forgot your password?</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF Pro Text:wght@600&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abhaya Libre:wght@400;700&display=swap" />
+</head>
+<body>
+    <div class="forgot-password">
+        <div class="group-parent">
+            <img class="arrow-icon" alt="" src="/assets/Arrow.svg">
+            <%= render "devise/shared/error_messages", resource: resource %>
+            <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+            <div class="group-container">
+                <div class="forgot-password-parent">
+                    <b class="forgot-password1">Forgot password</b>
+                    <div class="enter-your-email">Enter your email account to reset  your password</div>
+                </div>
+                <div class="rectangle-wrapper">
+                    <%= f.email_field :email, autofocus: true, autocomplete: "email" , class:'group-inner'%>
+                </div>
+                <div class="rectangle-parent">
+                    <%= f.submit "Reset Password" , class:'group-item'%>
+                </div>
+            </div>
+            <% end %>
+        </div>
+        <div class="devise-links">
+            <%= render "devise/shared/links" %>
+        </div>
+        <div class="home-indicator">
+            <div class="home-indicator1"></div>
+        </div>
+    </div>
+</body>
+</html>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
 
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
+<style type="text/css">
+  .border {
+    position: absolute;
+    top: 0px;
+    right: 2.3px;
+    border-radius: 2.67px;
+    border: 1px solid #1b1e28;
+    box-sizing: border-box;
+    width: 22px;
+    height: 11.3px;
+    opacity: 0.35;
+    mix-blend-mode: normal;
+}
+.cap-icon {
+    position: absolute;
+    top: 3.67px;
+    right: 0px;
+    width: 1.3px;
+    height: 4px;
+    opacity: 0.4;
+    mix-blend-mode: normal;
+}
+.capacity {
+    position: absolute;
+    top: 2px;
+    right: 4.3px;
+    border-radius: 1.33px;
+    background-color: #1b1e28;
+    width: 18px;
+    height: 7.3px;
+}
+.battery {
+    position: absolute;
+    top: 19.33px;
+    right: 18.37px;
+    width: 24.3px;
+    height: 11.3px;
+}
+.rectangle-div {
+    width: 100%;
+    height: 56px; /* Adjust the height as needed */
+    border-radius: 16px;
+    background-color: #ff6b6b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.wifi-icon {
+    position: relative;
+    width: 14.7px;
+    height: 11px;
+}
+.cellular-connection-icon {
+    position: relative;
+    width: 16.3px;
+    height: 10.7px;
+}
+.time {
+    position: absolute;
+    top: calc(50% - 7.5px);
+    left: 0px;
+    font-weight: 600;
+    display: inline-block;
+    width: 54px;
+}
+.time-style {
+    position: absolute;
+    top: 12px;
+    left: 21px;
+    width: 54px;
+    height: 21px;
+}
+.status-bar {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 375px;
+    height: 48px;
+}
+.group-child {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 44px;
+    height: 44px;
+}
+.forgot-password1 {
+    position: absolute;
+    top: 0px;
+    left: 38px;
+    line-height: 34px;
+}
+.enter-your-email {
+    position: absolute;
+    top: 46px;
+    left: 0px;
+    font-size: 16px;
+    line-height: 20px;
+    color: #7d848d;
+    white-space: pre-wrap;
+    display: inline-block;
+    width: 257px;
+}
+.forgot-password-parent {
+    position: absolute;
+    top: 0px;
+    left: 39px;
+    width: 257px;
+    height: 86px;
+}
+.group-item {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 16px;
+    background-color: #ff6b6b;
+    width: 335px;
+    height: 56px;
+    border: none;
+}
+.reset-password {
+    position: absolute;
+    top: 18px;
+    left: 116px;
+    line-height: 20px;
+}
+.rectangle-parent {
+    position: absolute;
+    top: 222px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 335px;
+    height: 56px;
+    font-size: 16px;
+    color: #fff;
+    text-align: center; /* Center-align the button text */
+}
+.group-inner {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 14px;
+    background-color: #f7f7f9;
+    width: 335px;
+    height: 56px;
+    border: none;
+}
+.rectangle-wrapper {
+    position: absolute;
+    top: 126px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 335px;
+    height: 56px;
+}
+.group-container {
+    position: absolute;
+    top: 84px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 335px;
+    height: 278px;
+}
+.forgot-password .group-container .reset-password {
+    display: block; /* Ensure the button takes full width */
+    margin: 0 auto; /* Center the button */
+}
+.group-parent {
+    position: absolute;
+    top: 56px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 335px;
+    height: 362px;
+    font-size: 26px;
+    font-family: 'Abhaya Libre';
+}
+.home-indicator1 {
+    position: absolute;
+    bottom: 8px;
+    left: calc(50% - 66.5px);
+    border-radius: 100px;
+    background-color: #1b1e28;
+    width: 134px;
+    height: 5px;
+}
+.home-indicator {
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 375px;
+    height: 34px;
+}
+.forgot-password {
+    width: 100%;
+    position: relative;
+    border-radius: 30px;
+    background-color: #fff;
+    height: 812px;
+    overflow: hidden;
+    text-align: center;
+    font-size: 15px;
+    color: #1b1e28;
+    font-family: 'SF Pro Text';
+}
+.arrow-icon {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 44px;
+    height: 44px;
+}
+.devise-links {
+    position: absolute;
+    top: 430px; /* Adjust this value as needed */
+    left: 50%;
+    transform: translateX(-90%);
+    width: 335px;
+}
+a {
+    color: #ff7029; /* Adjust color as needed */
+    text-decoration: none; /* Remove underline if necessary */
+}
+a:hover {
+    text-decoration: underline; /* Add hover effect if needed */
+}
 
-<%= render "devise/shared/links" %>
+</style>
