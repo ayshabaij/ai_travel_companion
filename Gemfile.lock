@@ -161,6 +161,7 @@ GEM
       activesupport (>= 3.0.0)
     racc (1.8.1)
     rack (2.2.9)
+    rack-cors (1.0.3)
     rack-mini-profiler (2.3.4)
       rack (>= 1.2.0)
     rack-proxy (0.7.7)
@@ -321,6 +322,7 @@ DEPENDENCIES
   pg
   puma (~> 5.0)
   pundit
+  rack-cors
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.7, >= 6.1.7.8)
   ransack

@@ -34,6 +34,7 @@ gem 'pundit'
 gem 'twilio-ruby'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'mail'
+gem 'rack-cors'
 gem 'rubocop'
 
 group :development, :test do
