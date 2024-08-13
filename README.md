@@ -1,24 +1,15 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Install RVM 
+Install Ruby - rvm install ruby
+Ruby version - ruby-3.1.2
 
-Things you may want to cover:
+Git clone https://github.com/ayshabaij/ai_travel_companion.git
 
-* Ruby version
+bundle install
 
-* System dependencies
+yarn install
 
-* Configuration
+rails assets:precompile
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+rails s
