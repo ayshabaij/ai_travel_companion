@@ -18,4 +18,11 @@ Rails.application.routes.draw do
       post :confirm
     end
   end
+
+  resources :hobbies, only: [:index, :show] do
+    resources :locations, only: [:index]
+  end
+
+  get 'profile/setup', to: 'profiles#setup', as: :profile_setup
+  post 'profile/setup', to: 'profiles#update_setup'
 end
