@@ -1,0 +1,32 @@
+<h1>Complete Your Profile</h1>
+
+<%= form_for @user, url: profile_setup_path, method: :post do |f| %>
+  <div class="field">
+    <%= f.label :date_of_birth %><br>
+    <%= f.date_field :date_of_birth %>
+  </div>
+
+  <div class="field">
+    <%= f.label :hobbies %><br>
+    <% @hobbies.each do |hobby| %>
+      <div>
+        <%= check_box_tag 'user[hobby_ids][]', hobby.id, @user.hobbies.include?(hobby) %>
+        <%= label_tag "user_hobby_ids_#{hobby.id}", hobby.name %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :dietary_restrictions %><br>
+    <%= f.text_field :dietary_restrictions %>
+  </div>
+
+  <div class="field">
+    <%= f.label :accessibility_issues %><br>
+    <%= f.text_field :accessibility_issues %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Next' %>
+  </div>
+<% end %>
