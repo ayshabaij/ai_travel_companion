@@ -1,45 +1,58 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_user!
 
-  def show
-    @user = current_user
-  end
-
-  def edit
-    @user = current_user
-  end
-
-  def update
-    @user = current_user
-    if @user.update(user_params)
-      redirect_to profile_path, notice: 'Profile updated successfully.'
-    else
-      render :edit
-    end
-  end
-
   def setup
-    @user = current_user
-    @hobbies = Hobby.all
+    # This action should render the form to input date of birth
   end
 
   def update_setup
-    @user = current_user
-    if @user.update(setup_params)
-      redirect_to authenticated_root_path, notice: 'Profile setup completed successfully.'
+    # Process the date of birth and redirect to setup_hobbies
+    if current_user.update(date_of_birth: params[:date_of_birth])
+      puts "---- DOB is -----"
+      puts params
+      puts "---------"
+      redirect_to setup_hobbies_profile_path
     else
-      @hobbies = Hobby.all
       render :setup
     end
   end
 
-  private
-
-  def user_params
-    params.require(:user).permit(:name, :email, :date_of_birth, :dietary_restrictions, :accessibility_issues)
+  def setup_hobbies
+    @hobbies = Hobby.all
+    # This action should render the form to select hobbies
   end
 
-  def setup_params
-    params.require(:user).permit(:date_of_birth, :hobby_ids, :dietary_restrictions, :accessibility_issues)
+  def update_hobbies
+    current_user.hobbies = Hobby.where(id: params[:hobby_ids])
+    puts "---- hobby is -----"
+    puts params
+    puts "---------"
+    redirect_to setup_dietary_restrictions_profile_path
+  end
+
+  def setup_dietary_restrictions
+    @dietary_restrictions = DietaryRestriction.all
+    # This action should render the form to select dietary restrictions
+  end
+
+  def update_dietary_restrictions
+    current_user.dietary_restrictions = DietaryRestriction.where(id: params[:dietary_restriction_ids])
+    puts "---- dietary_restrictions is -----"
+    puts params
+    puts "---------"
+    redirect_to setup_accessibility_profile_path
+  end
+
+  def setup_accessibility
+    @accessibilities = Accessibility.all
+    # This action should render the form to select accessibility needs
+  end
+
+  def update_accessibility
+    current_user.accessibilities = Accessibility.where(id: params[:accessibility_ids])
+    uts "---- accessibilities is -----"
+    puts params
+    puts "---------"
+    redirect_to welcome_index_path
   end
 end

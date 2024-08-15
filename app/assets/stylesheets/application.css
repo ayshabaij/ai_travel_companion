@@ -3,33 +3,3 @@
  *= require_self
  *= require home
  */
-/*.splash-screen, .onboarding-screen, .auth-screen {
-  text-align: center;
-  padding: 20px;
-}
-
-.splash-screen img {
-  width: 150px;
-  margin-bottom: 20px;
-}
-
-.onboarding-screen img {
-  width: 100%;
-  max-width: 400px;
-  margin-bottom: 20px;
-}
-
-.onboarding-screen h2 {
-  font-size: 1.5em;
-  margin-bottom: 10px;
-}
-
-.onboarding-screen p {
-  font-size: 1em;
-  margin-bottom: 20px;
-}
-
-.btn-primary {
-  background-color: #ff6f61;
-  border-color: #ff6f61;
-}*/
