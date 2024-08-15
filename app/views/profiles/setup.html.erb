@@ -1,32 +1,213 @@
-<h1>Complete Your Profile</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+    <%= csrf_meta_tags %>
+</head>
+<body>
+    <div class="interests">
+        <%= form_with url: profile_setup_path, method: :post, id: "dob-form" do %>
+            <img class="interests-child" alt="" src="/assets/Vector 2524.svg">
+            <div class="date-of-birth">Date Of Birth</div>
+            <div class="please-enter-your">Please Enter Your Date Of Birth</div>
+            <%= date_field_tag :dob, nil, class: "dob-field", placeholder: "dd-mm-yyyy" %>
+            <div class="continue-14-wrapper" id="submit-btn">
+                <b class="continue-14">CONTINUE 1/4</b>
+            </div>
+            <div class="interests-item"></div>
+            <div class="interests-inner"></div>
+        <% end %>
+    </div>
+</body>
+</html>
 
-<%= form_for @user, url: profile_setup_path, method: :post do |f| %>
-  <div class="field">
-    <%= f.label :date_of_birth %><br>
-    <%= f.date_field :date_of_birth %>
-  </div>
+<style type="text/css">
+   .interests-child {
+    position: absolute;
+    top: 66px;
+    left: 29px;
+    width: 9.1px;
+    height: 18.1px;
+}
+.date-of-birth {
+    position: absolute;
+    top: 106px;
+    left: 54px;
+    letter-spacing: 0.04em;
+    line-height: 140%;
+    font-weight: 600;
+}
+.please-enter-your {
+    position: absolute;
+    top: 170px;
+    left: 63px;
+    font-size: 13.19px;
+    line-height: 17.06px;
+    font-weight: 500;
+    color: #c6c5c7;
+}
+.continue-14-wrapper {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 67.18px;
+    background-color: #ebecef;
+    width: 312.4px;
+    height: 50.4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18.14px;
+    color: #828491;
+    cursor: not-allowed;
+}
+.continue-14-wrapper.active {
+    background-color: #ff6b6b;
+    cursor: pointer;
+}
+.continue-14-wrapper.active .continue-14 {
+    color: #fff;
+}
+.continue-14 {
+    font-weight: 700;
+}
+.interests-item {
+    position: absolute;
+    top: 46px;
+    left: 0px;
+    background-color: #d9d9d9;
+    width: 393px;
+    height: 4px;
+}
+.interests-inner {
+    position: absolute;
+    top: 46px;
+    left: 0px;
+    background-color: #ea4080;
+    width: 247px;
+    height: 4px;
+}
+.rectangle-div {
+    position: absolute;
+    top: 244px;
+    left: 21px;
+    border-radius: 14px;
+    background-color: #f7f7f9;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    width: 335px;
+    height: 56px;
+}
+.dd-mm-yy {
+    position: absolute;
+    top: 260px;
+    left: 32px;
+    font-size: 19.1px;
+    color: #000;
+    text-align: center;
+    opacity: 0.6;
+}
+.interests {
+    width: 100%;
+    position: relative;
+    background-color: #fff;
+    height: 852px;
+    text-align: left;
+    font-size: 38.29px;
+    color: #010001;
+    font-family: Inter;
+}
+.dob-field {
+    position: absolute;
+    top: 244px;
+    left: 21px;
+    width: 335px;
+    height: 56px;
+    padding: 10px;
+    font-size: 19.1px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 14px;
+    background-color: #f7f7f9;
+    box-sizing: border-box;
+    text-align: center;
+    color: #000;
+    opacity: 0.6;
+}
 
-  <div class="field">
-    <%= f.label :hobbies %><br>
-    <% @hobbies.each do |hobby| %>
-      <div>
-        <%= check_box_tag 'user[hobby_ids][]', hobby.id, @user.hobbies.include?(hobby) %>
-        <%= label_tag "user_hobby_ids_#{hobby.id}", hobby.name %>
-      </div>
-    <% end %>
-  </div>
 
-  <div class="field">
-    <%= f.label :dietary_restrictions %><br>
-    <%= f.text_field :dietary_restrictions %>
-  </div>
+</style>
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function() {
+    const submitBtn = document.getElementById("submit-btn");
+    const dobField = document.querySelector(".dob-field");
+    const form = document.getElementById("dob-form");
 
-  <div class="field">
-    <%= f.label :accessibility_issues %><br>
-    <%= f.text_field :accessibility_issues %>
-  </div>
+    dobField.addEventListener("input", function() {
+        const dob = dobField.value;
+        const dobDate = new Date(dob);
+        const today = new Date();
+        let age = today.getFullYear() - dobDate.getFullYear();
+        const monthDiff = today.getMonth() - dobDate.getMonth();
+        const dayDiff = today.getDate() - dobDate.getDate();
 
-  <div class="actions">
-    <%= f.submit 'Next' %>
-  </div>
-<% end %>
+        // Adjust age if the birthday hasn't been reached yet this year
+        if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+            age--;
+        }
+
+        if (dob && dobDate <= today && age >= 18) {
+            submitBtn.classList.add("active");
+        } else {
+            submitBtn.classList.remove("active");
+        }
+    });
+
+    submitBtn.addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const dob = dobField.value;
+        const dobDate = new Date(dob);
+        const today = new Date();
+        let age = today.getFullYear() - dobDate.getFullYear();
+        const monthDiff = today.getMonth() - dobDate.getMonth();
+        const dayDiff = today.getDate() - dobDate.getDate();
+
+        // Adjust age if the birthday hasn't been reached yet this year
+        if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+            age--;
+        }
+
+        console.log("DOB:", dob);
+        console.log("Age:", age);
+
+        if (dob && dobDate <= today && age >= 18) {
+            console.log("Valid DOB. Sending data to API...");
+
+            // Send data to Sinatra server
+            fetch('http://localhost:4567/receive_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ dob: dob })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                // Optionally handle the response data if needed
+                form.submit(); // Submit the Rails form after sending data to Sinatra
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        } else {
+            alert("Please enter a valid date of birth indicating that you are at least 18 years old.");
+        }
+    });
+});
+
+
+</script>

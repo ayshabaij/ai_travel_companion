@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, width=device-width">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" />
+  <style type="text/css">
+    .vegetarian-wrapper {
+      border-radius: 100px;
+      border: 2px solid #dee0e7;
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 12px;
+      margin: 3px;
+      cursor: pointer;
+      transition: background-color 0.3s, border-color 0.3s;
+      font-size: 14px;
+      flex: 0 0 auto;
+    }
+    .vegetarian-wrapper.selected {
+      background-color: #ea5b6e;
+      border-color: #ea5b6e;
+      color: #fff;
+    }
+    .frame-parent {
+      position: absolute;
+      top: 232px;
+      left: 45px;
+      display: flex;
+      flex-direction: row; /* Align items in a row */
+      flex-wrap: wrap; /* Allow wrapping */
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 10px;
+      height: 400px; /* Set a fixed height for the container */
+      overflow-y: auto; /* Enable vertical scrolling */
+      padding-right: 10px; /* Add some padding to the right for better appearance */
+    }
+    .interests-child {
+      position: absolute;
+      top: 66px;
+      left: 29px;
+      width: 9.1px;
+      height: 18.1px;
+    }
+    .dietary-intake {
+      position: absolute;
+      top: 100px;
+      left: 63px;
+      font-size: 38.29px;
+      letter-spacing: 0.04em;
+      line-height: 140%;
+      font-weight: 600;
+      color: #010001;
+    }
+    .please-choose-all {
+      position: absolute;
+      top: 170px;
+      left: 63px;
+      font-size: 13.19px;
+      line-height: 17.06px;
+      font-weight: 500;
+      color: #c6c5c7;
+    }
+    .continue-34-wrapper {
+      position: absolute;
+      top: 750px;
+      left: 40px;
+      border-radius: 67.18px;
+      background-color: #ebecef;
+      width: 312.4px;
+      height: 50.4px;
+      overflow: hidden;
+      font-size: 18.14px;
+      color: #828491;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .interests-item {
+       position: absolute;
+            top: 46px;
+            left: 0px;
+            background-color: #d9d9d9;
+            width: 393px;
+            height: 4px;
+    }
+    .interests-inner {
+      position: absolute;
+            top: 46px;
+            left: 0px;
+            background-color: #ea4080;
+            width: 247px;
+            height: 4px;
+    }
+    .interests {
+      width: 100%;
+      position: relative;
+      background-color: #fff;
+      height: 852px;
+      text-align: left;
+      font-size: 14.98px;
+      color: #bfc3cf;
+      font-family: Inter;
+    }
+  </style>
+</head>
+<body>
+  <div class="interests">
+    <%= form_with url: update_dietary_restrictions_profile_path, method: :post do %>
+      <div class="frame-parent">
+        <% @dietary_restrictions.each do |restriction| %>
+          <div class="vegetarian-wrapper" data-restriction-id="<%= restriction.id %>">
+            <%= restriction.name %>
+          </div>
+        <% end %>
+      </div>
+      <img class="interests-child" alt="" src="/assets/Vector 2524.svg">
+      <div class="dietary-intake">Dietary Intake</div>
+      <div class="please-choose-all">Please choose all that apply.</div>
+      <div class="continue-34-wrapper">
+        <b class="continue-34" id="submit-btn">CONTINUE 3/4</b>
+      </div>
+      <div class="interests-item"></div>
+      <div class="interests-inner"></div>
+    <% end %>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var selectedRestrictions = new Set();
+
+      document.querySelectorAll('.vegetarian-wrapper').forEach(function(button) {
+        button.addEventListener('click', function() {
+          var restrictionId = this.getAttribute('data-restriction-id');
+          if (selectedRestrictions.has(restrictionId)) {
+            selectedRestrictions.delete(restrictionId);
+            this.classList.remove('selected');
+          } else {
+            selectedRestrictions.add(restrictionId);
+            this.classList.add('selected');
+          }
+        });
+      });
+
+      document.getElementById("submit-btn").addEventListener("click", function() {
+        var form = this.closest("form");
+        var hiddenField = document.createElement("input");
+        hiddenField.type = "hidden";
+        hiddenField.name = "selected_restrictions";
+        hiddenField.value = Array.from(selectedRestrictions).join(",");
+        form.appendChild(hiddenField);
+        form.submit();
+      });
+    });
+  </script>
+</body>
+</html>
