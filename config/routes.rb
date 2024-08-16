@@ -26,4 +26,19 @@ Rails.application.routes.draw do
 
   get 'profile/setup', to: 'profiles#setup', as: :profile_setup
   post 'profile/setup', to: 'profiles#update_setup'
+
+  # Trip routes
+  get 'trip/start_date', to: 'trips#start_date'
+  post 'trip/save_start_date', to: 'trips#save_start_date'
+
+  get 'trip/end_date', to: 'trips#end_date'
+  post 'trip/save_end_date', to: 'trips#save_end_date'
+
+  get 'trip/address', to: 'trips#address'
+  post 'trip/save_address', to: 'trips#save_address'
+
+  get 'trip/budget', to: 'trips#budget'
+  post 'trip/save_budget', to: 'trips#save_budget'
+
+  get 'trip/prompt', to: 'trips#show_prompt', as: :trip_prompt
 end
