@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_08_13_181407) do
+ActiveRecord::Schema.define(version: 2024_08_15_220723) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,10 @@ ActiveRecord::Schema.define(version: 2024_08_13_181407) do
     t.string "phone_number"
     t.string "verification_code"
     t.date "date_of_birth"
+    t.date "trip_start_date"
+    t.date "trip_end_date"
+    t.string "trip_address"
+    t.integer "trip_budget"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

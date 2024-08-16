@@ -12,31 +12,38 @@
       align-items: center;
       justify-content: center;
       padding: 6px 12px;
-      margin: 5px; /* Adjust margin to control spacing */
+      margin: 5px;
       cursor: pointer;
       transition: background-color 0.3s, border-color 0.3s;
-      font-size: 14px; /* Adjust font size if needed */
-      box-sizing: border-box; /* Ensure proper sizing */
-      text-align: center; /* Center text */
+      font-size: 14px;
+      box-sizing: border-box;
+      text-align: center;
     }
     .wheel-chair-wrapper.selected {
       background-color: #ea5b6e;
       border-color: #ea5b6e;
       color: #fff;
     }
+    .interests-child {
+      position: absolute;
+      top: 66px;
+      left: 29px;
+      width: 9.1px;
+      height: 18.1px;
+    }
     .frame-parent {
       position: absolute;
       top: 232px;
       left: 45px;
       display: flex;
-      flex-wrap: wrap; /* Enable wrapping for grid layout */
+      flex-wrap: wrap;
       align-items: flex-start;
       justify-content: flex-start;
       gap: 10px;
-      width: calc(100% - 90px); /* Adjust width to fit within the container */
-      max-height: 400px; /* Set a maximum height for the container */
-      overflow-y: auto; /* Enable vertical scrolling */
-      padding-right: 10px; /* Add some padding to the right for better appearance */
+      width: calc(100% - 90px);
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 10px;
     }
     .accessbility-issue {
       position: absolute;
@@ -49,11 +56,11 @@
       font-weight: 600;
       color: #010001;
       text-align: center;
-      width: calc(100% - 126px); /* Adjust width to center text */
+      width: calc(100% - 126px);
     }
     .please-choose-all {
       position: absolute;
-      top: 200px; /* Adjusted top position to move it down */
+      top: 200px;
       left: 50%;
       transform: translateX(-50%);
       font-size: 13.19px;
@@ -66,7 +73,7 @@
       position: absolute;
       top: 750px;
       left: 50%;
-      transform: translateX(-50%); /* Center the button */
+      transform: translateX(-50%);
       border-radius: 67.18px;
       background-color: #ebecef;
       width: 312.4px;
@@ -77,16 +84,17 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
+      cursor: not-allowed; /* Initially disabled */
     }
     .continue-44-wrapper.active {
       background-color: #ea5b6e;
       color: #fff;
+      cursor: pointer;
     }
     .interests-item {
       position: absolute;
       top: 46px;
-      right: 0; /* Align to the right */
+      left: 0px;
       background-color: #d9d9d9;
       width: 393px;
       height: 4px;
@@ -94,7 +102,7 @@
     .interests-inner {
       position: absolute;
       top: 46px;
-      right: 0; /* Align to the right */
+      left: 0px;
       background-color: #ea4080;
       width: 247px;
       height: 4px;
@@ -121,6 +129,7 @@
           </div>
         <% end %>
       </div>
+      <img class="interests-child" alt="" src="/assets/Vector 5.svg">
       <div class="accessbility-issue">Accessibility Issue</div>
       <div class="please-choose-all">Please choose all that apply.</div>
       <div class="continue-44-wrapper" id="submit-btn">
@@ -132,58 +141,56 @@
     <% end %>
   </div>
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const wrappers = document.querySelectorAll(".wheel-chair-wrapper");
-      const submitBtn = document.getElementById("submit-btn");
-      const selectedAccessibilitiesContainer = document.getElementById("selected-accessibilities");
+   document.addEventListener("DOMContentLoaded", function() {
+    const wrappers = document.querySelectorAll(".wheel-chair-wrapper");
+    const submitBtn = document.getElementById("submit-btn");
+    const selectedAccessibilities = new Set();
 
-      wrappers.forEach(wrapper => {
+    wrappers.forEach(wrapper => {
         wrapper.addEventListener("click", function() {
-          this.classList.toggle("selected");
-          const id = this.getAttribute("data-id");
-          let input = document.querySelector(`input[name="accessibility_ids[]"][value="${id}"]`);
-
-          if (this.classList.contains("selected")) {
-            if (!input) {
-              input = document.createElement("input");
-              input.type = "hidden";
-              input.name = "accessibility_ids[]";
-              input.value = id;
-              selectedAccessibilitiesContainer.appendChild(input);
+            const name = this.textContent.trim(); // Get the name instead of the ID
+            if (selectedAccessibilities.has(name)) {
+                selectedAccessibilities.delete(name);
+                this.classList.remove("selected");
+            } else {
+                selectedAccessibilities.add(name);
+                this.classList.add("selected");
             }
-          } else {
-            if (input) input.remove();
-          }
 
-          if (selectedAccessibilitiesContainer.children.length > 0) {
-            submitBtn.classList.add("active");
-          } else {
-            submitBtn.classList.remove("active");
-          }
+            if (selectedAccessibilities.size > 0) {
+                submitBtn.classList.add("active");
+            } else {
+                submitBtn.classList.remove("active");
+            }
         });
-      });
-
-      submitBtn.addEventListener("click", function(event) {
-        event.preventDefault();
-        const formData = new FormData(document.querySelector("form"));
-
-        // Send the data to the other Ruby project's endpoint
-        fetch('https://other-ruby-project.example.com/endpoint', {
-          method: 'POST',
-          body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-          // Handle the response if needed
-          console.log('Success:', data);
-          // Optionally submit the form to the current Rails app
-          document.querySelector("form").submit();
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-      });
     });
-  </script>
+
+    submitBtn.addEventListener("click", function(event) {
+        if (submitBtn.classList.contains("active")) {
+            event.preventDefault();
+
+            // Send the names to the backend
+            fetch('http://localhost:4567/receive_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    user_id: <%= current_user.id %>,  // Add user_id here
+                    accessibilities: Array.from(selectedAccessibilities)
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                document.querySelector("form").submit(); // Submit the form after the API call
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    });
+});
+</script>
 </body>
 </html>

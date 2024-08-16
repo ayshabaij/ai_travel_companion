@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, width=device-width">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+</head>
+<body>
+  <%= form_with url: trip_save_address_path, method: :post, id: "trip-address-form" do %>
+  <div class="interests">
+    <div class="progress-bar">
+      <div class="progress"></div>
+    </div>
+    <img class="interests-child" alt="" src="/assets/Vector 5.svg" onclick="window.location.href='/welcome';">
+    
+    <div class="enter-location">Enter Location</div>
+    <div class="please-enter-your">Please Enter Your location manually</div>
+    
+    <div class="rectangle-div">
+      <%= text_field_tag :trip_address, nil, class: 'address-field', placeholder: 'Enter here' %>
+    </div>
+
+    <div class="continue-34-wrapper">
+      <%= submit_tag 'CONTINUE 3/4', class: 'continue-34', disabled: true %>
+    </div>
+  </div>
+  <% end %>
+</body>
+</html>
+
+<style type="text/css">
+  .interests-child {
+    position: absolute;
+    top: 66px;
+    left: 29px;
+    width: 9.1px;
+    height: 18.1px;
+    cursor: pointer;
+  }
+
+  .enter-location {
+    position: absolute;
+    top: 106px;
+    left: 48px;
+    letter-spacing: 0.04em;
+    line-height: 140%;
+    font-weight: 600;
+  }
+  .progress-bar {
+    position: absolute;
+    top: 46px;
+    left: 0px;
+    background-color: #d9d9d9;
+    width: 100%;
+    height: 4px;
+  }
+
+  .progress {
+    background-color: #ea4080;
+    width: 60%;
+    height: 100%;
+  }
+  .please-enter-your {
+    position: absolute;
+    top: 170px;
+    left: 58px;
+    font-size: 13.19px;
+    line-height: 17.06px;
+    font-weight: 500;
+    color: #c6c5c7;
+  }
+
+  .rectangle-div {
+    position: absolute;
+    top: 244px;
+    left: 21px;
+    border-radius: 14px;
+    background-color: #f7f7f9;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    width: 335px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    padding-right: 5px;
+  }
+
+  .address-field {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size: 19.1px;
+    color: #000;
+    text-align: left;
+    padding-left: 16px;
+    opacity: 0.6;
+  }
+
+  .continue-34-wrapper {
+    position: absolute;
+    top: 750px;
+    left: 40px;
+    border-radius: 67.18px;
+    background-color: #ebecef;
+    width: 312.4px;
+    height: 50.4px;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .continue-34 {
+    font-size: 18.14px;
+    color: #828491;
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: not-allowed;
+    width: 100%;
+    height: 100%;
+    line-height: 50.4px;
+  }
+
+  .continue-34.active {
+    background-color: #FF6B6B;
+    color: white;
+    cursor: pointer;
+  }
+
+  .interests {
+    width: 100%;
+    position: relative;
+    border-radius: 30px;
+    background-color: #fff;
+    height: 813px;
+    overflow: hidden;
+    text-align: left;
+    font-size: 38.29px;
+    color: #010001;
+    font-family: Inter;
+  }
+</style>
+
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function() {
+    const submitBtn = document.querySelector("#trip-address-form input[type='submit']");
+    const form = document.getElementById("trip-address-form");
+    const addressField = form.querySelector("input[name='trip_address']");
+
+    addressField.addEventListener("input", function() {
+      const isValid = addressField.value.trim() !== "";
+
+      if (isValid) {
+        submitBtn.disabled = false;
+        submitBtn.classList.add("active");
+      } else {
+        submitBtn.disabled = true;
+        submitBtn.classList.remove("active");
+      }
+    });
+
+    submitBtn.addEventListener("click", function(event) {
+      event.preventDefault();
+
+      if (addressField.value.trim() !== "") {
+        const address = addressField.value;
+
+        fetch('http://localhost:4568/receive_trip_data', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            user_id: '<%= current_user.id %>',
+            address: address
+          })
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Success:', data);
+                form.submit(); // Proceed to the next form if needed
+              })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      }
+    });
+  });
+</script>

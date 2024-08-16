@@ -9,7 +9,7 @@
 <body>
     <div class="interests">
         <%= form_with url: profile_setup_path, method: :post, id: "dob-form" do %>
-            <img class="interests-child" alt="" src="/assets/Vector 2524.svg">
+            <img class="interests-child" alt="" src="/assets/Vector 5.svg">
             <div class="date-of-birth">Date Of Birth</div>
             <div class="please-enter-your">Please Enter Your Date Of Birth</div>
             <%= date_field_tag :dob, nil, class: "dob-field", placeholder: "dd-mm-yyyy" %>
@@ -132,7 +132,7 @@
     border-radius: 14px;
     background-color: #f7f7f9;
     box-sizing: border-box;
-    text-align: center;
+    text-align: left;
     color: #000;
     opacity: 0.6;
 }
@@ -141,8 +141,8 @@
 </style>
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function() {
-    const submitBtn = document.getElementById("submit-btn");
     const dobField = document.querySelector(".dob-field");
+    const submitBtn = document.getElementById("submit-btn");
     const form = document.getElementById("dob-form");
 
     dobField.addEventListener("input", function() {
@@ -153,7 +153,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const monthDiff = today.getMonth() - dobDate.getMonth();
         const dayDiff = today.getDate() - dobDate.getDate();
 
-        // Adjust age if the birthday hasn't been reached yet this year
         if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
             age--;
         }
@@ -166,48 +165,31 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     submitBtn.addEventListener("click", function(event) {
-        event.preventDefault(); // Prevent default form submission
-
+        event.preventDefault();
         const dob = dobField.value;
-        const dobDate = new Date(dob);
-        const today = new Date();
-        let age = today.getFullYear() - dobDate.getFullYear();
-        const monthDiff = today.getMonth() - dobDate.getMonth();
-        const dayDiff = today.getDate() - dobDate.getDate();
 
-        // Adjust age if the birthday hasn't been reached yet this year
-        if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-            age--;
-        }
+        // Reformat the date to dd-mm-yyyy
+        const dobParts = dob.split("-");
+        const formattedDob = `${dobParts[2]}-${dobParts[1]}-${dobParts[0]}`;
 
-        console.log("DOB:", dob);
-        console.log("Age:", age);
-
-        if (dob && dobDate <= today && age >= 18) {
-            console.log("Valid DOB. Sending data to API...");
-
-            // Send data to Sinatra server
-            fetch('http://localhost:4567/receive_data', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ dob: dob })
+        fetch('http://localhost:4567/receive_data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                user_id: <%= current_user.id %>,  // Add user_id here
+                dob: formattedDob 
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                // Optionally handle the response data if needed
-                form.submit(); // Submit the Rails form after sending data to Sinatra
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-        } else {
-            alert("Please enter a valid date of birth indicating that you are at least 18 years old.");
-        }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            form.submit();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     });
 });
-
-
 </script>
