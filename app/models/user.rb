@@ -11,4 +11,5 @@ class User < ApplicationRecord
   has_many :dietary_restrictions, through: :user_dietary_restrictions
   has_many :user_accessibilities
   has_many :accessibilities, through: :user_accessibilities
+  has_many :prompts, dependent: :destroy
 end

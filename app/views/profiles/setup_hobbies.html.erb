@@ -152,7 +152,7 @@
     const submitBtn = document.getElementById("submit-btn");
 
     function updateSubmitButtonState() {
-        if (selectedHobbies.size > 0) {
+        if (selectedHobbies.size >= 5) {
             submitBtn.classList.add('active');
         } else {
             submitBtn.classList.remove('active');
@@ -168,6 +168,9 @@
             } else if (selectedHobbies.size < 5) {
                 selectedHobbies.add(hobbyName);
                 this.classList.add('selected');
+            } else if (selectedHobbies.size >= 5) {
+                // If more than 5, do nothing or show a message (optional)
+                alert('You can only select up to 5 hobbies.');
             }
             updateSubmitButtonState();
         });
@@ -199,6 +202,7 @@
         });
     });
 });
+
 </script>
 
 </body>
