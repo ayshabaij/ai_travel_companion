@@ -147,8 +147,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     dobField.addEventListener("input", function() {
         const dob = dobField.value;
-        const dobDate = new Date(dob);
         const today = new Date();
+        const dobDate = new Date(dob);
+
         let age = today.getFullYear() - dobDate.getFullYear();
         const monthDiff = today.getMonth() - dobDate.getMonth();
         const dayDiff = today.getDate() - dobDate.getDate();
@@ -165,17 +166,20 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     submitBtn.addEventListener("click", function(event) {
-        event.preventDefault();
-        const dob = dobField.value;
+        if (!submitBtn.classList.contains("active")) {
+            event.preventDefault();
+            return;
+        }
 
-        // Reformat the date to dd-mm-yyyy
+        const dob = dobField.value;
         const dobParts = dob.split("-");
         const formattedDob = `${dobParts[2]}-${dobParts[1]}-${dobParts[0]}`;
 
         fetch('http://localhost:4567/receive_data', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             },
             body: JSON.stringify({ 
                 user_id: <%= current_user.id %>,  // Add user_id here

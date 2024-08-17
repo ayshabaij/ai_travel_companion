@@ -124,7 +124,7 @@
     <%= form_with url: update_accessibility_profile_path, method: :post do %>
       <div class="frame-parent">
         <% @accessibilities.each do |accessibility| %>
-          <div class="wheel-chair-wrapper" data-id="<%= accessibility.id %>">
+          <div class="wheel-chair-wrapper" data-accessibility-name="<%= accessibility.name.downcase %>">
             <%= label_tag "accessibility_ids_#{accessibility.id}", accessibility.name %>
           </div>
         <% end %>
@@ -141,56 +141,75 @@
     <% end %>
   </div>
   <script>
-   document.addEventListener("DOMContentLoaded", function() {
-    const wrappers = document.querySelectorAll(".wheel-chair-wrapper");
-    const submitBtn = document.getElementById("submit-btn");
-    const selectedAccessibilities = new Set();
+    document.addEventListener("DOMContentLoaded", function() {
+      var selectedAccessibilities = new Set();
+      var submitBtn = document.getElementById("submit-btn");
 
-    wrappers.forEach(wrapper => {
-        wrapper.addEventListener("click", function() {
-            const name = this.textContent.trim(); // Get the name instead of the ID
-            if (selectedAccessibilities.has(name)) {
-                selectedAccessibilities.delete(name);
-                this.classList.remove("selected");
-            } else {
-                selectedAccessibilities.add(name);
-                this.classList.add("selected");
-            }
-
-            if (selectedAccessibilities.size > 0) {
-                submitBtn.classList.add("active");
-            } else {
-                submitBtn.classList.remove("active");
-            }
-        });
-    });
-
-    submitBtn.addEventListener("click", function(event) {
-        if (submitBtn.classList.contains("active")) {
-            event.preventDefault();
-
-            // Send the names to the backend
-            fetch('http://localhost:4567/receive_data', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    user_id: <%= current_user.id %>,  // Add user_id here
-                    accessibilities: Array.from(selectedAccessibilities)
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                document.querySelector("form").submit(); // Submit the form after the API call
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+      function updateSubmitButtonState() {
+        if (selectedAccessibilities.size > 0) {
+          submitBtn.classList.add("active");
+        } else {
+          submitBtn.classList.remove("active");
         }
+      }
+
+      document.querySelectorAll('.wheel-chair-wrapper').forEach(function(wrapper) {
+        wrapper.addEventListener('click', function() {
+          var accessibilityName = this.textContent.trim();
+          var accessibilityNameLower = accessibilityName.toLowerCase();
+
+          // Check if "None" is selected or any other option
+          if (accessibilityNameLower === "none") {
+            // If "None" is selected, clear all other selections
+            selectedAccessibilities.clear();
+            document.querySelectorAll('.wheel-chair-wrapper').forEach(function(btn) {
+              btn.classList.remove('selected');
+            });
+            selectedAccessibilities.add(accessibilityName);
+            this.classList.add('selected');
+          } else {
+            // If another option is selected, deselect "None"
+            if (selectedAccessibilities.has("None")) {
+              selectedAccessibilities.delete("None");
+              document.querySelector('.wheel-chair-wrapper[data-accessibility-name="none"]').classList.remove('selected');
+            }
+            if (selectedAccessibilities.has(accessibilityName)) {
+              selectedAccessibilities.delete(accessibilityName);
+              this.classList.remove('selected');
+            } else {
+              selectedAccessibilities.add(accessibilityName);
+              this.classList.add('selected');
+            }
+          }
+          updateSubmitButtonState();
+        });
+      });
+
+      submitBtn.addEventListener("click", function(event) {
+        if (submitBtn.classList.contains("active")) {
+          event.preventDefault();
+
+          fetch('http://localhost:4567/receive_data', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              user_id: <%= current_user.id %>,  // Pass user_id here
+              accessibilities: Array.from(selectedAccessibilities)
+            })
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Success:', data);
+            document.querySelector("form").submit(); // Submit the form after the API call
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+        }
+      });
     });
-});
-</script>
+  </script>
 </body>
 </html>

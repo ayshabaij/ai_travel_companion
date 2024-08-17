@@ -172,6 +172,11 @@
         const twoMonthsFromToday = new Date();
         twoMonthsFromToday.setMonth(today.getMonth() + 2);
 
+        // Reset the time components to compare only dates
+        today.setHours(0, 0, 0, 0);
+        startDate.setHours(0, 0, 0, 0);
+        twoMonthsFromToday.setHours(0, 0, 0, 0);
+
         if (startDate < today) {
             return false; // Date is in the past
         }
@@ -227,5 +232,4 @@
         }
     });
 });
-
 </script>
