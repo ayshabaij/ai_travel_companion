@@ -42,7 +42,6 @@ Rails.application.routes.draw do
 
   get 'trip/prompt', to: 'trips#show_prompt', as: :trip_prompt
 
-
   # Chatbot Routes
   get '/chatbot', to: 'pages#chatbot'
   post '/chatbot/submit', to: 'pages#submit_chat'

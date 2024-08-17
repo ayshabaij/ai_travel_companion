@@ -36,8 +36,8 @@ ActiveRecord::Schema.define(version: 2024_08_17_115051) do
   create_table "hobbies_users", id: false, force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "hobby_id", null: false
-    t.index ["hobby_id", "user_id"], name: "index_hobbies_users_on_hobby_id_and_user_id"
-    t.index ["user_id", "hobby_id"], name: "index_hobbies_users_on_user_id_and_hobby_id"
+    t.index %w[hobby_id user_id], name: "index_hobbies_users_on_hobby_id_and_user_id"
+    t.index %w[user_id hobby_id], name: "index_hobbies_users_on_user_id_and_hobby_id"
   end
 
   create_table "locations", force: :cascade do |t|
