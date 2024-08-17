@@ -32,7 +32,7 @@ gem 'dotenv-rails', groups: [:development, :test]
 gem 'mail'
 gem 'rack-cors'
 gem 'rubocop'
-gem 'erb_lint', require: false
+gem 'httparty'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

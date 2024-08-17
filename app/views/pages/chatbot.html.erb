@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    <%= csrf_meta_tags %>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF Pro Text:wght@600&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap" />
+</head>
+<body>
+
+    <div class="start-a-conversation">
+        <!-- Chat display area -->
+        <div id="chat-screen" class="chat-screen"></div>
+
+        <!-- Chat input area -->
+        <div class="frame-parent">
+            <div class="chat-input-container">
+                <%= text_field_tag :chat, nil, id: 'chat-input', class: 'chat-text', placeholder: "Type your message here..." %>
+                <img id="chat-submit" class="frame-icon" alt="" src="/assets/Frame1.svg" style="cursor: pointer;">
+            </div>
+        </div>
+
+        <div class="start-a-conversation-inner">
+            <div class="frame-group">
+                <div class="vector-1-stroke-parent">
+                    <img class="vector-1-stroke" alt="" src="/assets/Vector 1 (Stroke).svg" onclick="window.location.href='/welcome';">
+                    <div class="which-is-the">Back</div>
+                </div>
+                <img class="vector-icon" alt="" src="/assets/Vector.svg">
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const chatScreen = document.querySelector("#chat-screen");
+            const submitBtn = document.querySelector("#chat-submit");
+            const messageInput = document.querySelector("#chat-input");
+    let isTyping = false; // to prevent sending new messages until the bot has replied
+
+    submitBtn.addEventListener("click", function(event) {
+        event.preventDefault();
+        const userMessage = messageInput.value.trim();
+
+        if (userMessage && !isTyping) {
+            addMessageToChat('user', userMessage);
+            messageInput.value = '';
+            showLoadingAnimation();
+
+            isTyping = true; // prevent further input until the bot replies
+
+            fetch('/chatbot/submit', {  // Update this line to match the correct route
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ message: userMessage })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.reply) {
+                    removeLoadingAnimation();
+                    typeMessage('bot', data.reply, () => {
+                        isTyping = false; // allow new input after the bot replies
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                removeLoadingAnimation();
+                addMessageToChat('bot', 'There was an error processing your request.');
+                isTyping = false; // allow new input in case of error
+            });
+        }
+    });
+
+    function addMessageToChat(sender, message) {
+        const messageElement = document.createElement('div');
+        messageElement.className = `chat-message ${sender}`;
+        messageElement.textContent = message;
+        chatScreen.insertBefore(messageElement, chatScreen.firstChild); // insert message at the bottom
+        chatScreen.scrollTop = chatScreen.scrollHeight;
+    }
+
+    function showLoadingAnimation() {
+        const loadingElement = document.createElement('div');
+        loadingElement.className = 'chat-message loading';
+        loadingElement.id = 'loading-message';
+        loadingElement.innerHTML = `<div class="loading-dots"><span>.</span><span>.</span><span>.</span></div>`;
+        chatScreen.insertBefore(loadingElement, chatScreen.firstChild); // insert loading at the bottom
+        chatScreen.scrollTop = chatScreen.scrollHeight;
+    }
+
+    function removeLoadingAnimation() {
+        const loadingElement = document.querySelector('#loading-message');
+        if (loadingElement) {
+            loadingElement.remove();
+        }
+    }
+
+    function typeMessage(sender, message, callback) {
+        let index = 0;
+        const messageElement = document.createElement('div');
+        messageElement.className = `chat-message ${sender}`;
+        chatScreen.insertBefore(messageElement, chatScreen.firstChild); // insert bot's message at the bottom
+
+        function typeNextCharacter() {
+            if (index < message.length) {
+                messageElement.innerHTML = message.substring(0, index + 1);
+                index++;
+                setTimeout(typeNextCharacter, 50); // Adjust typing speed here
+            } else {
+                chatScreen.scrollTop = chatScreen.scrollHeight;
+                if (callback) callback(); // signal that typing is done
+            }
+        }
+
+        typeNextCharacter();
+    }
+});
+
+</script>
+
+</body>
+</html>
+
+<style type="text/css">
+    .border {
+        position: absolute;
+        top: 0px;
+        right: 2.3px;
+        border-radius: 2.67px;
+        border: 1px solid #fff;
+        box-sizing: border-box;
+        width: 22px;
+        height: 11.3px;
+        opacity: 0.35;
+        mix-blend-mode: normal;
+    }
+
+    .cap-icon {
+        position: absolute;
+        top: 3.67px;
+        right: 0px;
+        width: 1.3px;
+        height: 4px;
+        opacity: 0.4;
+        mix-blend-mode: normal;
+    }
+
+    .capacity {
+        position: absolute;
+        top: 2px;
+        right: 4.3px;
+        border-radius: 1.33px;
+        background-color: #fff;
+        width: 18px;
+        height: 7.3px;
+    }
+
+    .battery {
+        position: absolute;
+        top: 17.33px;
+        right: 14.37px;
+        width: 24.3px;
+        height: 11.3px;
+    }
+
+    .wifi-icon {
+        position: relative;
+        width: 15.3px;
+        height: 11px;
+    }
+
+    .cellular-connection-icon {
+        position: relative;
+        width: 17px;
+        height: 10.7px;
+    }
+
+    .time {
+        position: absolute;
+        top: 6px;
+        left: 0px;
+        letter-spacing: -0.24px;
+        line-height: 20px;
+        font-weight: 600;
+        display: inline-block;
+        width: 54px;
+    }
+
+    .time-style {
+        position: absolute;
+        height: 47.73%;
+        width: 14.4%;
+        top: 15.91%;
+        right: 80%;
+        bottom: 36.36%;
+        left: 5.6%;
+    }
+
+    .bars-status-bar-iphone-l {
+        position: absolute;
+        width: 100%;
+        top: 0px;
+        right: 0px;
+        left: 0px;
+        height: 44px;
+    }
+
+    .bowser-ios-firefox-dark {
+        position: absolute;
+        width: 100%;
+        top: 0px;
+        right: 0px;
+        left: 0px;
+        height: 44px;
+        overflow: hidden;
+    }
+
+    .home-indicator {
+        position: absolute;
+        bottom: 8px;
+        left: calc(50% - 67px);
+        border-radius: 100px;
+        background-color: #fff;
+        width: 134px;
+        height: 5px;
+    }
+
+    .bars-home-indicator-iphone {
+        position: absolute;
+        top: 778px;
+        left: 121px;
+        width: 134px;
+        height: 34px;
+    }
+
+    .bowser-ios-firefox-dark-parent {
+        position: absolute;
+        width: 100%;
+        top: 0px;
+        right: 0px;
+        left: 0px;
+        height: 812px;
+        text-align: center;
+        font-size: 15px;
+        font-family: 'SF Pro Text';
+    }
+
+    .which-is-the {
+        position: relative;
+        font-weight: 600;
+    }
+
+    .frame-child {
+        width: 1px;
+        position: relative;
+        background-color: #fff;
+        height: 28px;
+    }
+
+    .which-is-the-nearest-vegan-hot-parent {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+    }
+
+    .frame-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .frame-wrapper {
+        border-radius: 4px;
+        background-color: #10a37f;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        padding: 8px;
+    }
+
+    .frame-parent {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 16px;
+        box-sizing: border-box;
+    }
+
+    .vector-1-stroke {
+        width: 6.8px;
+        position: relative;
+        height: 12px;
+        object-fit: contain;
+    }
+
+    .vector-1-stroke-parent {
+        align-self: stretch;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 12px;
+    }
+
+    .vector-icon {
+        width: 24px;
+        position: relative;
+        height: 24px;
+    }
+
+    .frame-group {
+        width: 335px;
+        flex: 1;
+        overflow: hidden;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .start-a-conversation-inner {
+        position: absolute;
+        top: 0; /* Move it to the top of the container */
+        left: 0;
+        background-color: #343541;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        box-sizing: border-box;
+        width: 375px;
+        height: 64.5px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0px 20px;
+        z-index: 10; /* Ensure it stays above other content */
+    }
+
+    .start-a-conversation {
+        width: 100%;
+        position: relative;
+        background-color: #343541;
+        height: 812px;
+        overflow: hidden;
+        text-align: left;
+        font-size: 16px;
+        color: #fff;
+        font-family: Raleway;
+    }
+
+    .chat-input-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #343541;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        padding: 8px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .chat-text {
+        background-color: transparent;
+        border: none;
+        color: white;
+        width: 90%;
+        font-size: 16px;
+        outline: none;
+    }
+
+    .chat-text::placeholder {
+        color: #ffffff;
+        opacity: 0.6;
+    }
+
+    .chat-text:focus {
+        outline: none;
+    }
+
+    .chat-screen {
+        padding: 20px;
+        display: flex;
+        flex-direction: column-reverse;
+        overflow-y: auto;
+        height: calc(100% - 150px); /* Adjust the height based on your layout */
+    }
+
+    .chat-message {
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 8px;
+        max-width: 80%;
+        word-wrap: break-word;
+    }
+
+    .chat-message.user {
+        background-color: #10a37f;
+        color: #FFFFFF;
+        align-self: flex-end;
+    }
+
+    .chat-message.bot {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #FFFFFF;
+        align-self: flex-start;
+    }
+
+    .chat-message.loading {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #FFFFFF;
+        align-self: flex-start;
+    }
+
+    .loading-dots {
+        display: inline-block;
+    }
+
+    .loading-dots span {
+        animation: blink 1.4s infinite both;
+        color: white;
+    }
+
+    .loading-dots span:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .loading-dots span:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+
+    @keyframes blink {
+        0% {
+            opacity: 0.2;
+        }
+        20% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0.2;
+        }
+    }
+</style>

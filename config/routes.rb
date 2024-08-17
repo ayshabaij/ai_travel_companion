@@ -41,4 +41,11 @@ Rails.application.routes.draw do
   post 'trip/save_budget', to: 'trips#save_budget'
 
   get 'trip/prompt', to: 'trips#show_prompt', as: :trip_prompt
+
+
+  # Chatbot Routes
+  get '/chatbot', to: 'pages#chatbot'
+  post '/chatbot/submit', to: 'pages#submit_chat'
+  get '/pages/step1', to: 'pages#step1'
+  get '/pages/step2', to: 'pages#step2'
 end

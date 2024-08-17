@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_08_15_220723) do
+ActiveRecord::Schema.define(version: 2024_08_17_115051) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,8 +36,8 @@ ActiveRecord::Schema.define(version: 2024_08_15_220723) do
   create_table "hobbies_users", id: false, force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "hobby_id", null: false
-    t.index %w[hobby_id user_id], name: "index_hobbies_users_on_hobby_id_and_user_id"
-    t.index %w[user_id hobby_id], name: "index_hobbies_users_on_user_id_and_hobby_id"
+    t.index ["hobby_id", "user_id"], name: "index_hobbies_users_on_hobby_id_and_user_id"
+    t.index ["user_id", "hobby_id"], name: "index_hobbies_users_on_user_id_and_hobby_id"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -46,6 +46,14 @@ ActiveRecord::Schema.define(version: 2024_08_15_220723) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["hobby_id"], name: "index_locations_on_hobby_id"
+  end
+
+  create_table "prompts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.text "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_prompts_on_user_id"
   end
 
   create_table "user_accessibilities", force: :cascade do |t|
@@ -95,6 +103,7 @@ ActiveRecord::Schema.define(version: 2024_08_15_220723) do
   end
 
   add_foreign_key "locations", "hobbies"
+  add_foreign_key "prompts", "users"
   add_foreign_key "user_accessibilities", "accessibilities"
   add_foreign_key "user_accessibilities", "users"
   add_foreign_key "user_dietary_restrictions", "dietary_restrictions"
