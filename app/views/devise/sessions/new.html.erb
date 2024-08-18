@@ -20,14 +20,11 @@
           <div class="group-div">
             <div class="group-parent1">
               <div class="rectangle-wrapper">
-                <%= f.email_field :email, autofocus: true, autocomplete: "email" , class: 'group-child', placeholder: "Enter your email" %>
+                <%= f.email_field :email, autofocus: true, autocomplete: "email" , class: 'group-child'%>
               </div>
               <div class="rectangle-parent">
-                <%= f.password_field :password, autocomplete: "current-password", class: 'group-child', placeholder: "Enter your password" %>
+                <%= f.password_field :password, autocomplete: "current-password", class: 'group-child' %>
                 <img class="eyeicon" alt="" src="/assets/Icon.svg" onclick="togglePasswordVisibility()">
-              </div>
-              <div class="rectangle-parent">
-                <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'group-child', placeholder: "Confirm your password" %>
               </div>
               <% if flash[:error].present? %>
               <div class="error-popup">
@@ -62,7 +59,6 @@
   </div>
 </body>
 </html>
-
 <style type="text/css">
  .border {
   position: absolute;
@@ -365,7 +361,7 @@
 }
 .sign-in {
   width: 100%;
-  position relative;
+  position: relative;
   border-radius: 30px;
   background-color: #fff;
   height: 812px;
@@ -397,7 +393,6 @@ a:hover {
   align-items: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   font-family: 'Inter', sans-serif;
-  z-index: 1000; /* Ensure it stays on top */
 }
 
 .error-icon {
@@ -410,97 +405,26 @@ a:hover {
   font-size: 14px;
 }
 </style>
-
 <script type="text/javascript">
   document.addEventListener("DOMContentLoaded", function() {
     const eyeIcon = document.querySelector(".eyeicon");
     const passwordField = document.querySelector("input[type='password']");
-    const emailField = document.querySelector('input[type="email"]');
-    const passwordConfirmationField = document.querySelector('input[name="user[password_confirmation]"]');
+    const errorPopup = document.querySelector(".error-popup");
 
     eyeIcon.addEventListener("click", function() {
       if (passwordField.type === "password") {
         passwordField.type = "text";
-        eyeIcon.src = "/assets/Icon-open-eye.svg"; // Change to open eye icon
-      } else {
-        passwordField.type = "password";
-        eyeIcon.src = "/assets/Icon.svg"; // Change back to closed eye icon
-      }
-    });
+            eyeIcon.src = "/assets/Icon-open-eye.svg"; // Change to open eye icon
+          } else {
+            passwordField.type = "password";
+            eyeIcon.src = "/assets/Icon.svg"; // Change back to closed eye icon
+          }
+        });
 
-    function validateEmail(email) {
-      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return re.test(String(email).toLowerCase());
-    }
-
-    function checkUniqueEmail(email, callback) {
-      const xhr = new XMLHttpRequest();
-      xhr.open('POST', '/check_email', true);
-      xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-      xhr.onload = function() {
-        if (xhr.status === 200) {
-          const response = JSON.parse(xhr.responseText);
-          callback(response.isUnique);
-        }
-      };
-      xhr.send(JSON.stringify({ email: email }));
-    }
-
-    function validateForm(callback) {
-      let valid = true;
-      let errorMessage = '';
-
-      if (!validateEmail(emailField.value)) {
-        valid = false;
-        errorMessage = 'Please enter a valid email address.';
-        callback(valid, errorMessage);
-        return;
-      }
-
-      if (passwordField.value.length < 6) {
-        valid = false;
-        errorMessage = 'Password must be at least 6 characters long.';
-        callback(valid, errorMessage);
-        return;
-      }
-
-      if (passwordField.value !== passwordConfirmationField.value) {
-        valid = false;
-        errorMessage = 'Passwords do not match.';
-        callback(valid, errorMessage);
-        return;
-      }
-
-      checkUniqueEmail(emailField.value, function(isUnique) {
-        if (!isUnique) {
-          valid = false;
-          errorMessage = 'Email is already taken.';
-        }
-        callback(valid, errorMessage);
-      });
-    }
-
-    function showError(message) {
-      const errorElement = document.createElement('div');
-      errorElement.classList.add('error-popup');
-      errorElement.innerHTML = `<span class="error-icon">✖</span><span class="error-message">${message}</span>`;
-      document.body.appendChild(errorElement);
-
+    if (errorPopup) {
       setTimeout(function() {
-        errorElement.style.display = "none";
-      }, 5000);
+        errorPopup.style.display = "none";
+        }, 5000); // Hide after 5 seconds
     }
-
-    const form = document.querySelector('form');
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();
-      validateForm(function(valid, errorMessage) {
-        if (valid) {
-          form.submit();
-        } else {
-          showError(errorMessage);
-        }
-      });
-    });
   });
 </script>
