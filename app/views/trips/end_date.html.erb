@@ -3,8 +3,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, width=device-width">
-
-  <link rel="stylesheet" href="./index.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
 </head>
 <body>
@@ -15,19 +13,33 @@
       <div class="progress"></div>
     </div>
     <div class="enter-end-date">Enter End Date</div>
-    <div class="kindly-enter-the">Kindly enter the expected end date of trip</div>
+    <div class="kindly-enter-the">Kindly enter the expected end date of the trip</div>
 
     <div class="rectangle-div">
       <%= date_field_tag :trip_end_date, nil, class: 'date-field', placeholder: 'DD-MM-YYYY' %>
+    </div>
+
+    <!-- Warning Message -->
+    <div class="warning-message">
+      <p>Please ensure the stay duration does not exceed one week from the start date.</p>
     </div>
 
     <div class="continue-24-wrapper">
       <%= submit_tag 'CONTINUE 2/4', class: 'continue-24', disabled: true %>
     </div>
   </div>
-  <% end %>   
+  <% end %> 
+
+  <!-- Modal for displaying errors -->
+  <div id="error-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p id="modal-error-message"></p>
+    </div>
+  </div>
 </body>
 </html>
+
 
 <style type="text/css">
   .interests-child {
@@ -57,6 +69,7 @@
     font-weight: 500;
     color: #c6c5c7;
   }
+
   .progress-bar {
     position: absolute;
     top: 46px;
@@ -144,6 +157,58 @@
     color: #010001;
     font-family: Inter;
   }
+
+/* Warning Message Styling */
+.warning-message {
+  position: absolute;
+  top: 320px; /* Adjust as needed */
+  left: 21px;
+  width: 335px;
+  text-align: center;
+  color: #c6c5c7; /* Greyed out color */
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding-top: 60px;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%; /* Make sure the modal content is responsive */
+  max-width: 90%; /* Ensure the popup doesn't exceed the body's width */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  border-radius: 10px;
+  text-align: center;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -151,62 +216,75 @@
     const submitBtn = document.querySelector("#trip-end-date-form input[type='submit']");
     const form = document.getElementById("trip-end-date-form");
     const dateField = form.querySelector("input[name='trip_end_date']");
-      const tripStartDate = new Date('<%= @trip_start_date %>'); // Replace with actual start date
+    const tripStartDate = new Date('<%= current_user.trip_start_date %>'); // Replace with actual start date
+    const modal = document.getElementById("error-modal");
+    const modalErrorMessage = document.getElementById("modal-error-message");
+    const closeBtn = document.querySelector(".close");
 
-      function validateDate(endDate) {
-        const today = new Date();
-        const endDateObj = new Date(endDate);
-        const twoWeeksFromStartDate = new Date(tripStartDate);
-        twoWeeksFromStartDate.setDate(tripStartDate.getDate() + 14);
+    function showModal(message) {
+      modalErrorMessage.textContent = message;
+      modal.style.display = "block";
+    }
 
-        if (endDateObj < today) {
-              return false; // End date is in the past
-            }
+    function validateDate(endDate) {
+      const today = new Date();
+      const endDateObj = new Date(endDate);
+      const maxEndDate = new Date(tripStartDate);
+        maxEndDate.setDate(tripStartDate.getDate() + 7); // End date should not exceed 7 days from start date
 
-            if (endDateObj > twoWeeksFromStartDate) {
-              return false; // End date is more than 2 weeks after the start date
-            }
+        // Reset time to 00:00:00 to compare only dates
+        today.setHours(0, 0, 0, 0);
+        endDateObj.setHours(0, 0, 0, 0);
+        maxEndDate.setHours(0, 0, 0, 0);
+        tripStartDate.setHours(0, 0, 0, 0);
 
-          return true; // End date is valid
+        if (endDateObj < tripStartDate) {
+          showModal("The end date cannot be before the start date.");
+          return false;
         }
 
-        dateField.addEventListener("input", function() {
-          const isValid = validateDate(dateField.value);
+        if (endDateObj < today) {
+          showModal("The end date cannot be in the past.");
+          return false;
+        }
 
-          if (isValid) {
-            submitBtn.disabled = false;
-            submitBtn.classList.add("active");
-          } else {
-            submitBtn.disabled = true;
-            submitBtn.classList.remove("active");
-          }
-        });
+        if (endDateObj > maxEndDate) {
+          showModal("Choose a date not more than 7 days from the start of your trip.");
+          return false;
+        }
 
-        submitBtn.addEventListener("click", function(event) {
-          event.preventDefault();
+        return true; // Date is valid
+      }
 
-          if (validateDate(dateField.value)) {
-            const endDate = dateField.value;
+      dateField.addEventListener("input", function() {
+        const isValid = validateDate(dateField.value);
 
-            fetch('http://localhost:4568/receive_trip_data', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                user_id: '<%= current_user.id %>',
-                end_date: endDate
-              })
-            })
-            .then(response => response.json())
-            .then(data => {
-              console.log('Success:', data);
-                  form.submit(); // Proceed to the next form if needed
-                })
-            .catch((error) => {
-              console.error('Error:', error);
-            });
-          }
-        });
+        if (isValid) {
+          submitBtn.disabled = false;
+          submitBtn.classList.add("active");
+        } else {
+          submitBtn.disabled = true;
+          submitBtn.classList.remove("active");
+        }
       });
-    </script>
+
+      submitBtn.addEventListener("click", function(event) {
+        if (!validateDate(dateField.value)) {
+            event.preventDefault(); // Prevent form submission if the date is invalid
+          }
+        });
+
+    // When the user clicks on the close button, close the modal
+      closeBtn.onclick = function() {
+        modal.style.display = "none";
+      }
+
+    // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+    });
+
+  </script>

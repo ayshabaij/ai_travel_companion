@@ -3,30 +3,28 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, width=device-width">
-    
-    <link rel="stylesheet" href="./index.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
 </head>
 <body>
     <%= form_with url: trip_save_budget_path, method: :post, id: "trip-budget-form" do %>
     <div class="interests">
       <div class="progress-bar">
-      <div class="progress"></div>
-    </div>
-        <img class="interests-child" alt="" src="/assets/Vector 5.svg" onclick="window.location.href='/welcome';">
-        
-        <div class="enter-budget">Enter Budget</div>
-        <div class="please-enter-your">Please Enter Your budget</div>
-        
-        <div class="rectangle-div">
-            <%= number_field_tag :trip_budget, nil, class: 'budget-field', placeholder: 'Enter your budget in KRW' %>
-        </div>
+          <div class="progress"></div>
+      </div>
+      <img class="interests-child" alt="" src="/assets/Vector 5.svg" onclick="window.location.href='/welcome';">
 
-        <div class="continue-44-wrapper">
-            <%= submit_tag 'CONTINUE 4/4', class: 'continue-44', disabled: true %>
-        </div>
+      <div class="enter-budget">Enter Budget</div>
+      <div class="please-enter-your">Please Enter Your budget</div>
+
+      <div class="rectangle-div">
+        <%= number_field_tag :trip_budget, nil, class: 'budget-field', placeholder: 'Enter your budget in KRW' %>
     </div>
-   <% end %> 
+
+    <div class="continue-44-wrapper">
+        <%= submit_tag 'CONTINUE 4/4', class: 'continue-44', disabled: true %>
+    </div>
+</div>
+<% end %> 
 </body>
 </html>
 
@@ -55,13 +53,13 @@
     background-color: #d9d9d9;
     width: 100%;
     height: 4px;
-  }
+}
 
-  .progress {
+.progress {
     background-color: #ea4080;
     width: 60%;
     height: 100%;
-  }
+}
 .please-enter-your {
     position: absolute;
     top: 176px;
@@ -124,12 +122,16 @@
     height: 100%;
     line-height: 50.4px;
     transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    align-items: center; /* Vertically centers the text */
+    justify-content: center;
 }
 
 .continue-44.active {
     background-color: #FF6B6B;
     color: white;
     cursor: pointer;
+    border: 3px solid #FF6B6B
 }
 
 .interests-item {

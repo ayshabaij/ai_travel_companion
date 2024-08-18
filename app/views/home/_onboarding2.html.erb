@@ -9,9 +9,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abhaya Libre:wght@700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF Pro Text:wght@600&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gill Sans MT:wght@400&display=swap" />
-    
-    
-    
 </head>
 <body>
     
@@ -23,23 +20,19 @@
                 <div class="the-world-is-wide-and-our-dre-parent">
                     <div class="the-world-is">The world is wide, and our dreams are wider</div>
                     <img class="group-childd" alt="" src="/assets/Vector 2524.svg">
-                    
                 </div>
                 <div class="to-get-the">To get the best of your adventure you just need to leave and go where you like. we are waiting for you</div>
             </div>
             <div class="rectangle-parent">
-                <div class="group-item">
-                </div>
-                <div class="group-inner">
-                </div>
-                <div class="rectangle-div">
-                </div>
+                <div class="small-block"></div> <!-- First small block -->
+                <div class="large-block"></div> <!-- Large block in the center -->
+                <div class="small-block"></div> <!-- Second small block -->
             </div>
         </div>
         <div class="rectangle-group">
             <div class="group-childd1">
             </div>
-            <b class="next">Next</b>
+            <div class="next" onclick="showNextStep()">Next</div>
         </div>
 
         <div class="skip" onclick="navigateToSignIn()">Skip</div>
@@ -49,13 +42,11 @@
         </div>
     </div>
     
-    
     <script>
-
-    function navigateToSignIn() {
-      window.location.href = 'http://localhost:3000/users/sign_in';
-    }
-  </script>
+        function navigateToSignIn() {
+          window.location.href = 'http://localhost:3000/users/sign_in';
+      }
+    </script>
     
 </body>
 </html>
@@ -111,38 +102,29 @@
     width: 321px;
     height: 163.9px;
 }
-.group-item {
-    position: absolute;
-    top: 0px;
-    left: 17px;
-    border-radius: 16px;
-    background-color: #ff6b6b;
-    width: 35px;
-    height: 7px;
-}
-.group-inner {
-    position: absolute;
-    top: 0px;
-    left: 0px;
+.small-block {
     border-radius: 16px;
     background-color: #caeaff;
     width: 13px;
     height: 7px;
+    display: inline-block; /* Make blocks inline */
+    margin-right: 5px; /* Space between blocks */
 }
-.rectangle-div {
-    position: absolute;
-    top: 0px;
-    left: 56px;
+.large-block {
     border-radius: 16px;
-    background-color: #caeaff;
-    width: 6px;
+    background-color: #ff6b6b;
+    width: 35px;
     height: 7px;
+    display: inline-block; /* Make blocks inline */
+    margin-right: 5px; /* Space between blocks */
 }
 .rectangle-parent {
+    display: flex; /* Use flexbox for automatic positioning */
+    align-items: center;
     position: absolute;
     top: 188px;
     left: 129px;
-    width: 62px;
+    width: auto;
     height: 7px;
 }
 .group-parent {
@@ -285,6 +267,4 @@
     color: #fff;
     font-family: 'Playfair Display';
 }
-
-
 </style>

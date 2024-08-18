@@ -30,18 +30,16 @@
         <div class="adventures-that-will">"Adventures that will make your heart race are waiting!</div>
       </div>
       <div class="rectangle-parent">
-        <div class="group-item">
-        </div>
-        <div class="group-inner">
-        </div>
-        <div class="rectangle-div">
-        </div>
+        <div class="group-item1"></div> <!-- Large block -->
+        <div class="group-inner1"></div> <!-- First small block -->
+        <div class="rectangle-div1"></div> <!-- Second small block -->
       </div>
+
     </div>
     <div class="rectangle-group" onclick="showPartial('onboarding2')">
       <div class="group-childd1">
       </div>
-      <b class="next">Get Started</b>
+      <div class="next" onclick="showNextStep()">Get Started</div>
     </div>
 
     <div class="skip" onclick="navigateToSignIn()">Skip</div>
@@ -52,7 +50,7 @@
   </div>
 
 
- <script>
+  <script>
 
     function navigateToSignIn() {
       window.location.href = 'http://localhost:3000/users/sign_in';
@@ -64,14 +62,14 @@
 
 <style type="text/css">
   .afbea499038243-1-icon {
-width: 100%;
-position: relative;
-border-radius: 30px;
-max-width: 100%;
-overflow: hidden;
-height: 444px;
-object-fit: cover;
-}
+    width: 100%;
+    position: relative;
+    border-radius: 30px;
+    max-width: 100%;
+    overflow: hidden;
+    height: 444px;
+    object-fit: cover;
+  }
   .the-world-is {
     position: absolute;
     top: 0px;
@@ -116,29 +114,29 @@ object-fit: cover;
   .group-item1 {
     position: absolute;
     top: 0px;
-    left: 39px;
+    left: 0px;
     border-radius: 16px;
-    background-color: #caeaff;
-    width: 13px;
+    background-color: #ff6b6b;
+    width: 35px;
     height: 7px;
-      }
+  }
   .group-inner1 {
     position: absolute;
     top: 0px;
-    left: 56px;
+    left: 39px; /* Adjusted positioning for small block */
     border-radius: 16px;
     background-color: #caeaff;
-    width: 6px;
-    height: 7px;
+    width: 13px;
+    height: 7px; 
   }
   .rectangle-div1 {
     position: absolute;
     top: 0px;
-    left: 56px;
+    left: 56px; /* Adjusted positioning for small block */
     border-radius: 16px;
     background-color: #caeaff;
     width: 6px;
-    height: 7px;
+    height: 7px; 
   }
   .rectangle-parent1 {
     position: absolute;
@@ -302,7 +300,7 @@ object-fit: cover;
     color: #1b1e28;
   }
 
-.adventures-that-will {
+  .adventures-that-will {
     width: 303px;
     position: relative;
     font-size: 16px;
@@ -311,7 +309,7 @@ object-fit: cover;
     color: #7d848d;
     text-align: center;
     display: inline-block;
-}
+  }
 
 
 

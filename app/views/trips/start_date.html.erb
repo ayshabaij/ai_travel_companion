@@ -1,38 +1,38 @@
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, width=device-width">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
-    
-    
-    
 </head>
 <body>
     <%= form_with url: trip_save_start_date_path, method: :post, id: "trip-start-date-form" do %>
-  <div class="interests">
-      <img class="interests-child" alt="" src="/assets/Vector 5.svg" onclick="window.location.href='/welcome';">
-      <div class="progress-bar">
-        <div class="progress"></div>
-      </div>
-    </div>
+    <div class="interests">
+        <img class="interests-child" alt="" src="/assets/Vector 5.svg" onclick="window.location.href='/welcome';">
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
 
-    <div class="enter-start-date">Enter Start Date</div>
-    <div class="kindly-enter-the">Kindly Enter the start date of trip</div>
-    
-    <div class="rectangle-div">
-      <%= date_field_tag :trip_start_date, nil, class: 'date-field', placeholder: 'DD-MM-YYYY' %>
-    </div>
-    
-    <div class="continue-14-wrapper">
-      <%= submit_tag "CONTINUE 1/4", class: 'continue-14', disabled: true %>
-    </div>
-  </div>
-<% end %>
+        <div class="enter-start-date">Enter Start Date</div>
+        <div class="kindly-enter-the">Kindly Enter the start date of the trip</div>
+        
+        <div class="rectangle-div">
+            <%= date_field_tag :trip_start_date, nil, class: 'date-field', placeholder: 'DD-MM-YYYY' %>
+        </div>
 
+        <!-- Warning Message -->
+        <div class="warning-message">
+            <p>Ensure trips are scheduled within 60 days of the selected start date to help algorithm performance.</p>
+        </div>
+        
+        <div class="continue-14-wrapper">
+            <%= submit_tag "CONTINUE 1/4", class: 'continue-14', disabled: true %>
+        </div>
+    </div>
+    <% end %>
 </body>
 </html>
+
 <style type="text/css">
   .interests-child {
     position: absolute;
@@ -137,13 +137,17 @@
     cursor: not-allowed;
     width: 100%;
     height: 100%;
-    line-height: 50.4px;
+    display: flex;
+    align-items: center; /* Vertically centers the text */
+    justify-content: center; /* Horizontally centers the text */
+    border-radius: 67.18px;
 }
 
 .continue-14.active {
     background-color: #FF6B6B;
     color: white;
     cursor: pointer;
+    border: 3px solid #FF6B6B
 }
 
 .interests {
@@ -159,6 +163,17 @@
     font-family: Inter;
 }
 
+.warning-message {
+    position: absolute;
+    top: 320px; /* Adjust as needed */
+    left: 21px;
+    width: 335px;
+    text-align: center;
+    color: #c6c5c7; /* Greyed out color */
+    font-size: 12px;
+    font-weight: 500;
+}
+
 </style>
 <script type="text/javascript">
   document.addEventListener("DOMContentLoaded", function() {
@@ -171,6 +186,11 @@
         const startDate = new Date(date);
         const twoMonthsFromToday = new Date();
         twoMonthsFromToday.setMonth(today.getMonth() + 2);
+
+        // Reset the time components to compare only dates
+        today.setHours(0, 0, 0, 0);
+        startDate.setHours(0, 0, 0, 0);
+        twoMonthsFromToday.setHours(0, 0, 0, 0);
 
         if (startDate < today) {
             return false; // Date is in the past
@@ -227,5 +247,4 @@
         }
     });
 });
-
 </script>

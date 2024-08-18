@@ -1,9 +1,8 @@
 class ChatbotService
   require 'httparty'
 
-
   API_KEY = ENV['UPSTAGE_API_KEY']
-  BASE_URL = 'https://api.upstage.ai/v1/solar'
+  BASE_URL = 'https://api.upstage.ai/v1/solar'.freeze
 
   def initialize
     @system_prompt = {
@@ -27,7 +26,7 @@ class ChatbotService
       },
       body: {
         model: 'solar-1-mini-chat',
-        messages: messages,
+        messages:,
         stream: true
       }.to_json
     ) do |chunk|
@@ -38,7 +37,7 @@ class ChatbotService
         chunk_data = JSON.parse(chunk_data_raw)
         delta_content = chunk_data.dig("choices", 0, "delta", "content")
         bot_reply += delta_content if delta_content
-      rescue JSON::ParserError => e
+      rescue JSON::ParserError
         # Handle the case where the chunk is not valid JSON
         puts "Failed to parse chunk: #{chunk_data_raw}"
       end
@@ -47,11 +46,10 @@ class ChatbotService
     # Verify if the response is related to South Korea
     if bot_reply.downcase.include?('korea') || bot_reply.downcase.include?('seoul') || bot_reply.downcase.include?('busan') # Add more keywords as needed
       # Append bot response to the chat history
-      @chat_history << { "role" => "assistant", "content" => bot_reply }
     else
       bot_reply = "Sorry, I can only provide information related to tourism in South Korea."
-      @chat_history << { "role" => "assistant", "content" => bot_reply }
     end
+    @chat_history << { "role" => "assistant", "content" => bot_reply }
 
     # Ensure the chat history doesn't exceed the size limit
     @chat_history = @chat_history.last(@history_size)

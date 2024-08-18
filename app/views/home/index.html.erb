@@ -16,26 +16,26 @@
 </div>
 <style type="text/css">
   .onboarding-screen {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
 
-.onboarding-screen > .onboarding-step {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: translateX(100%);
-  transition: transform 0.5s ease-in-out;
-  background-color: white; /* Added background color for visibility */
-}
+  .onboarding-screen > .onboarding-step {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: translateX(100%);
+    transition: transform 0.5s ease-in-out;
+    background-color: white; /* Added background color for visibility */
+  }
 
-.onboarding-screen > .onboarding-step.active {
-  transform: translateX(0);
-}
+  .onboarding-screen > .onboarding-step.active {
+    transform: translateX(0);
+  }
 
-.onboarding-screen > .onboarding-step.slide-out-left {
-  transform: translateX(-100%);
-}
+  .onboarding-screen > .onboarding-step.slide-out-left {
+    transform: translateX(-100%);
+  }
 </style>

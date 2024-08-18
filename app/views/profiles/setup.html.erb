@@ -9,22 +9,22 @@
 <body>
     <div class="interests">
         <%= form_with url: profile_setup_path, method: :post, id: "dob-form" do %>
-            <img class="interests-child" alt="" src="/assets/Vector 5.svg">
-            <div class="date-of-birth">Date Of Birth</div>
-            <div class="please-enter-your">Please Enter Your Date Of Birth</div>
-            <%= date_field_tag :dob, nil, class: "dob-field", placeholder: "dd-mm-yyyy" %>
-            <div class="continue-14-wrapper" id="submit-btn">
-                <b class="continue-14">CONTINUE 1/4</b>
-            </div>
-            <div class="interests-item"></div>
-            <div class="interests-inner"></div>
+        <img class="interests-child" alt="" src="/assets/Vector 5.svg">
+        <div class="date-of-birth">Date Of Birth</div>
+        <div class="please-enter-your">Please Enter Your Date Of Birth</div>
+        <%= date_field_tag :dob, nil, class: "dob-field", placeholder: "dd-mm-yyyy" %>
+        <div class="continue-14-wrapper" id="submit-btn">
+            <b class="continue-14">CONTINUE 1/4</b>
+        </div>
+        <div class="interests-item"></div>
+        <div class="interests-inner"></div>
         <% end %>
     </div>
 </body>
 </html>
 
 <style type="text/css">
-   .interests-child {
+ .interests-child {
     position: absolute;
     top: 66px;
     left: 29px;
@@ -140,56 +140,60 @@
 
 </style>
 <script type="text/javascript">
-document.addEventListener("DOMContentLoaded", function() {
-    const dobField = document.querySelector(".dob-field");
-    const submitBtn = document.getElementById("submit-btn");
-    const form = document.getElementById("dob-form");
+    document.addEventListener("DOMContentLoaded", function() {
+        const dobField = document.querySelector(".dob-field");
+        const submitBtn = document.getElementById("submit-btn");
+        const form = document.getElementById("dob-form");
 
-    dobField.addEventListener("input", function() {
-        const dob = dobField.value;
-        const dobDate = new Date(dob);
-        const today = new Date();
-        let age = today.getFullYear() - dobDate.getFullYear();
-        const monthDiff = today.getMonth() - dobDate.getMonth();
-        const dayDiff = today.getDate() - dobDate.getDate();
+        dobField.addEventListener("input", function() {
+            const dob = dobField.value;
+            const today = new Date();
+            const dobDate = new Date(dob);
 
-        if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-            age--;
-        }
+            let age = today.getFullYear() - dobDate.getFullYear();
+            const monthDiff = today.getMonth() - dobDate.getMonth();
+            const dayDiff = today.getDate() - dobDate.getDate();
 
-        if (dob && dobDate <= today && age >= 18) {
-            submitBtn.classList.add("active");
-        } else {
-            submitBtn.classList.remove("active");
-        }
-    });
+            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+                age--;
+            }
 
-    submitBtn.addEventListener("click", function(event) {
-        event.preventDefault();
-        const dob = dobField.value;
+            if (dob && dobDate <= today && age >= 18) {
+                submitBtn.classList.add("active");
+            } else {
+                submitBtn.classList.remove("active");
+            }
+        });
 
-        // Reformat the date to dd-mm-yyyy
-        const dobParts = dob.split("-");
-        const formattedDob = `${dobParts[2]}-${dobParts[1]}-${dobParts[0]}`;
+        submitBtn.addEventListener("click", function(event) {
+            if (!submitBtn.classList.contains("active")) {
+                event.preventDefault();
+                return;
+            }
 
-        fetch('http://localhost:4567/receive_data', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ 
+            const dob = dobField.value;
+            const dobParts = dob.split("-");
+            const formattedDob = `${dobParts[2]}-${dobParts[1]}-${dobParts[0]}`;
+
+            fetch('http://localhost:4567/receive_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ 
                 user_id: <%= current_user.id %>,  // Add user_id here
                 dob: formattedDob 
             })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            form.submit();
-        })
-        .catch((error) => {
-            console.error('Error:', error);
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                form.submit();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
         });
     });
-});
 </script>

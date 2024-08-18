@@ -5,10 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, width=device-width">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF Pro Text:wght@600&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;600&display=swap" />
-    
-    
-    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;600&display=swap" />   
 </head>
 <body>
 
@@ -35,33 +32,33 @@
 
 
         <div class="prompt-child">
-          <img class="sparkle-resting-v2-1ff6f6a71f2-icon" alt="" src="https://s3-alpha-sig.figma.com/img/481b/9a02/cd93ec8b3d03a386af43312352d1d6a4?Expires=1724630400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=XVGgaS~LEQAOVpAkT03pD5rLXPCjIZcbahw2zKVouNFsBXHT2hX1cdtzlHzFxwYGE6r8dP~F8j2X7hJOGqQMiWYZXNSi9H-bUhQePMgtasdR-NXfFDjIEVAQCATqQIfIRtyBh9s6fS2ddE3G-8INzz89q4w2fd-JYqSPmDOxyWnOt5njt8YvCqPcjCBPRxhQ393DHHfcXAE-xChPMxexaE-0Dpfuog2vnqyAEQRchgTcgmC7E-9rgt4oXMAXTxzBSIogpZoXLJu5UwmCva0p3tIMcTXjTh~fAf5kz46rMP5pQ61CYskyTtz-ED3agclNSvMsBP9bajThKZFhocYeJA__">
-          <div class="recommend-a-minimum">
-            <%= @prompt %>
-        </div>
+            <img class="sparkle-resting-v2-1ff6f6a71f2-icon" alt="" src="https://s3-alpha-sig.figma.com/img/481b/9a02/cd93ec8b3d03a386af43312352d1d6a4?Expires=1724630400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=XVGgaS~LEQAOVpAkT03pD5rLXPCjIZcbahw2zKVouNFsBXHT2hX1cdtzlHzFxwYGE6r8dP~F8j2X7hJOGqQMiWYZXNSi9H-bUhQePMgtasdR-NXfFDjIEVAQCATqQIfIRtyBh9s6fS2ddE3G-8INzz89q4w2fd-JYqSPmDOxyWnOt5njt8YvCqPcjCBPRxhQ393DHHfcXAE-xChPMxexaE-0Dpfuog2vnqyAEQRchgTcgmC7E-9rgt4oXMAXTxzBSIogpZoXLJu5UwmCva0p3tIMcTXjTh~fAf5kz46rMP5pQ61CYskyTtz-ED3agclNSvMsBP9bajThKZFhocYeJA__">
+            <div class="recommend-a-minimum">
+                <%= @prompt %>
+            </div>
+         </div>
     </div>
-</div>
 
-<script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function() {
-      const promptElement = document.querySelector(".recommend-a-minimum");
-      const promptText = promptElement.innerText;
-  promptElement.innerText = "";  // Clear the text initially
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+          const promptElement = document.querySelector(".recommend-a-minimum");
+          const promptText = promptElement.innerText;
+          promptElement.innerText = "";  // Clear the text initially
 
-  let index = 0;
+          let index = 0;
 
-  function typeWriter() {
-    if (index < promptText.length) {
-      promptElement.innerHTML += promptText.charAt(index);
-      index++;
-      setTimeout(typeWriter, 50); // Adjust the speed here (50ms per character)
-  }
-}
+          function typeWriter() {
+            if (index < promptText.length) {
+              promptElement.innerHTML += promptText.charAt(index);
+              index++;
+              setTimeout(typeWriter, 20); // Adjust the speed here (50ms per character)
+          }
+      }
 
-typeWriter();
-});
+      typeWriter();
+    });
 
-</script>
+    </script>
 
 
 </body>
