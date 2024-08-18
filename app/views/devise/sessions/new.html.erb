@@ -9,7 +9,7 @@
 <body>
   <div class="sign-in">
     <div class="arrow-parent">
-      <img class="arrow-icon" alt="" src="/assets/Arrow.svg">
+      <img class="arrow-icon" alt="" src="/assets/Arrow.svg" onclick="window.location.href='/welcome';">
       <div class="group-parent">
         <div class="group-container">
           <div class="sign-in-now-parent">
@@ -24,21 +24,31 @@
               </div>
               <div class="rectangle-parent">
                 <%= f.password_field :password, autocomplete: "current-password", class: 'group-child' %>
-                <img class="eyeicon" alt="" src="/assets/Icon.svg">
+                <img class="eyeicon" alt="" src="/assets/Icon.svg" onclick="togglePasswordVisibility()">
+              </div>
+              <% if flash[:error].present? %>
+              <div class="error-popup">
+                <span class="error-icon">✖</span>
+                <span class="error-message"><%= flash[:error] %></span>
+              </div>
+              <% end %>
+              <div class="forgot-password">
+                <a href="<%= new_password_path(resource_name) %>">Forgot Password?</a>
               </div>
             </div>
           </div>
         </div>
-        <center><div class="group-parent2">
-          <b class=""><%= f.submit "Log in", class:'rectangle-wrapper group-inner' %></b>
-          <div class="or-connect-parent">
-            <div class="dont-have-an-account-parent">
-              <div class="dont-have-an ">Don’t have an account?</div><br>
-              <br><br>
-              <%= render "devise/shared/links" %>
+        <center>
+          <div class="group-parent2">
+            <b class=""><%= f.submit "Log in", class:'rectangle-wrapper group-inner' %></b>
+            <div class="or-connect-parent">
+              <div class="dont-have-an-account-parent">
+                <span class="dont-have-an">Don’t have an account?</span>
+                <a href="<%= new_registration_path(resource_name) %>" class="sign-up">Sign up</a>
+              </div>
             </div>
           </div>
-        </div></center>
+        </center>
         <% end %>
       </div>
     </div>
@@ -49,7 +59,6 @@
   </div>
 </body>
 </html>
-
 <style type="text/css">
  .border {
   position: absolute;
@@ -128,10 +137,14 @@
   height: 44px;
 }
 .sign-in-now {
-  position: absolute;
-  top: 0px;
-  left: 47px;
+  width: 126px;
+  position: relative;
+  font-size: 26px;
   line-height: 34px;
+  display: inline-block;
+  font-family: 'Abhaya Libre';
+  color: #1b1e28;
+  text-align: center;
 }
 .please-sign-in {
   position: absolute;
@@ -157,6 +170,7 @@
   width: 335px;
   height: 56px;
   border: none; /* Remove black border */
+  padding-left: 10px;
 }
 .rectangle-wrapper {
   position: absolute;
@@ -176,6 +190,7 @@
   max-width: 100%;
   overflow: hidden;
   max-height: 100%;
+  cursor: pointer;
 }
 .rectangle-parent {
   position: absolute;
@@ -191,11 +206,14 @@
   width: 335px;
   height: 136px;
 }
-.forget-password {
+.forgot-password {
   position: absolute;
   top: 152px;
-  left: 232px;
+  right: 0px; /* Align to the right */
   line-height: 16px;
+  color: #ff7029;
+  font-size: 14px;
+  text-align: right;
 }
 .group-div {
   position: absolute;
@@ -204,8 +222,6 @@
   width: 335px;
   height: 168px;
   text-align: right;
-  font-size: 14px;
-  color: #ff7029;
 }
 .group-container {
   position: absolute;
@@ -222,7 +238,10 @@
   background-color: #ff6b6b;
   width: 335px;
   height: 56px;
-  border: none; /* Remove black border */
+  border: none;
+  color: #ffffff; /* Make button text white */
+  line-height: 56px; /* Center text vertically */
+  font-weight: bold; /* Remove black border */
 }
 .sign-in1 {
   position: absolute;
@@ -243,28 +262,28 @@
   line-height: 16px;
 }
 .sign-up {
-  position: absolute;
-  top: 0px;
-  left: 151px;
-  line-height: 16px;
+  margin-left: 280px; /* Adjust spacing between text */
   color: #ff7029;
 }
 .dont-have-an-account-parent {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 196px;
-  height: 16px;
+  display: flex;
+  justify-content: center; /* Center the entire text block */
+  align-items: center; /* Vertically align the items */
+  margin-top: -43px; /* Adjust as needed */
 }
 .or-connect-parent {
   position: absolute;
-  top: 96px;
-  left: 68px;
-  width: 196px;
+  top: 130px; /* Adjust position */
+  left: 0;
+  right: 0;
+  width: 100%;
   height: 52px;
-  text-align: left;
+  text-align: center;
   font-size: 14px;
   color: #707b81;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .group-parent2 {
   position: absolute;
@@ -361,4 +380,52 @@ a:hover {
   text-decoration: underline; /* Add hover effect if needed */
 }
 
+.error-popup {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #FF6B6B;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-family: 'Inter', sans-serif;
+}
+
+.error-icon {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.error-message {
+  font-weight: bold;
+  font-size: 14px;
+}
+
 </style>
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function() {
+    const eyeIcon = document.querySelector(".eyeicon");
+    const passwordField = document.querySelector("input[type='password']");
+    const errorPopup = document.querySelector(".error-popup");
+
+    eyeIcon.addEventListener("click", function() {
+      if (passwordField.type === "password") {
+        passwordField.type = "text";
+            eyeIcon.src = "/assets/Icon-open-eye.svg"; // Change to open eye icon
+          } else {
+            passwordField.type = "password";
+            eyeIcon.src = "/assets/Icon.svg"; // Change back to closed eye icon
+          }
+        });
+
+    if (errorPopup) {
+      setTimeout(function() {
+        errorPopup.style.display = "none";
+        }, 5000); // Hide after 5 seconds
+    }
+  });
+</script>

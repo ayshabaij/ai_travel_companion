@@ -5,15 +5,12 @@
   <meta name="viewport" content="initial-scale=1, width=device-width">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF Pro Text:wght@600&display=swap" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abhaya Libre:wght@400;700&display=swap" />
-
-
-
 </head>
 <body>
 
   <div class="sign-up">
     <div class="arrow-parent">
-      <img class="arrow-icon" alt="" src="/assets/Arrow.svg">
+      <img class="arrow-icon" alt="" src="/assets/Arrow.svg" onclick="window.location.href='/welcome';">
       <%= render "devise/shared/error_messages", resource: resource %>
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>           
       <div class="group-parent">
@@ -31,15 +28,14 @@
                 <% if @minimum_password_length %>
                 <em>(<%= @minimum_password_length %> characters minimum)</em>
                 <% end %><br />
-                <%= f.password_field :password, autocomplete: "new-password", class: 'group-child' %>
+                <%= f.password_field :password, autocomplete: "new-password", class: 'group-child', id: 'password' %>
+                <img class="eyeicon" alt="" src="/assets/Icon.svg" id="togglePassword" onclick="togglePasswordVisibility()">
               </div>
               <div class="rectangle-parent">
                 <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'group-child'  %>
-                <img class="eyeicon" alt="" src="/assets/Icon.svg">
-
               </div>
             </div>
-            <div class="password-must-be">Password must be 6 character</div>
+            <div class="password-must-be">Password must be 6 characters</div>
           </div>
         </div>
         <div class="group-parent2">
@@ -62,7 +58,19 @@
   </div>
   <% end %>
 
-
+  <script>
+    function togglePasswordVisibility() {
+      const passwordField = document.getElementById('password');
+      const togglePassword = document.getElementById('togglePassword');
+      if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        togglePassword.src = '/assets/Icon-open-eye.svg'; // Change to open eye icon
+      } else {
+        passwordField.type = 'password';
+        togglePassword.src = '/assets/Icon.svg'; // Change back to closed eye icon
+      }
+    }
+  </script>
 
 </body>
 </html>
@@ -195,10 +203,7 @@
     top: 28.57%;
     right: 4.78%;
     bottom: 28.57%;
-    left: 88.06%;
-    max-width: 100%;
-    overflow: hidden;
-    max-height: 100%;
+    cursor: pointer;
   }
   .rectangle-parent {
     position: absolute;
@@ -246,6 +251,7 @@
     width: 335px;
     height: 56px;
     border: none;
+    color: white; 
   }
   .sign-up1 {
     position: absolute;

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { sessions: 'sessions' }
 
   authenticated :user do
     root 'profiles#setup', as: :authenticated_root
@@ -47,4 +47,7 @@ Rails.application.routes.draw do
   post '/chatbot/submit', to: 'pages#submit_chat'
   get '/pages/step1', to: 'pages#step1'
   get '/pages/step2', to: 'pages#step2'
+
+  get 'invalid_location', to: 'trips#invalid_location', as: 'invalid_location'
+  get 'error_page', to: 'trips#error_page', as: 'error_page'
 end

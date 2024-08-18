@@ -19,9 +19,6 @@ class ProfilesController < ApplicationController
   end
 
   def update_hobbies
-    puts "------ hobby"
-    puts params
-    puts "----------"
     current_user.hobbies = Hobby.where(name: params[:hobby_names])
     redirect_to setup_dietary_restrictions_profile_path
   end
@@ -32,9 +29,6 @@ class ProfilesController < ApplicationController
   end
 
   def update_dietary_restrictions
-    puts "------ DR"
-    puts params
-    puts "----------"
     current_user.dietary_restrictions = DietaryRestriction.where(name: params[:dietary_restriction_ids])
     redirect_to setup_accessibility_profile_path
   end
@@ -45,9 +39,6 @@ class ProfilesController < ApplicationController
   end
 
   def update_accessibility
-    puts "------ AI"
-    puts params
-    puts "----------"
     current_user.accessibilities = Accessibility.where(name: params[:accessibility_ids])
     redirect_to welcome_index_path
   end

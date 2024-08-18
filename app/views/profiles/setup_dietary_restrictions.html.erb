@@ -58,7 +58,7 @@
     .please-choose-all {
       position: absolute;
       top: 170px;
-      left: 63px;
+      left: 120px;
       font-size: 13.19px;
       line-height: 17.06px;
       font-weight: 500;
@@ -117,21 +117,21 @@
 <body>
   <div class="interests">
     <%= form_with url: update_dietary_restrictions_profile_path, method: :post do %>
-      <div class="frame-parent">
-        <% @dietary_restrictions.each do |restriction| %>
-          <div class="vegetarian-wrapper" data-restriction-name="<%= restriction.name.downcase %>">
-            <%= restriction.name %>
-          </div>
-        <% end %>
+    <div class="frame-parent">
+      <% @dietary_restrictions.each do |restriction| %>
+      <div class="vegetarian-wrapper" data-restriction-name="<%= restriction.name.downcase %>">
+        <%= restriction.name %>
       </div>
-      <img class="interests-child" alt="" src="/assets/Vector 5.svg">
-      <div class="dietary-intake">Dietary Intake</div>
-      <div class="please-choose-all">Please choose all that apply.</div>
-      <div class="continue-34-wrapper" id="submit-btn">
-        <b class="continue-34">CONTINUE 3/4</b>
-      </div>
-      <div class="interests-item"></div>
-      <div class="interests-inner"></div>
+      <% end %>
+    </div>
+    <img class="interests-child" alt="" src="/assets/Vector 5.svg">
+    <div class="dietary-intake">Dietary Intake</div>
+    <div class="please-choose-all">Please choose all that apply.</div>
+    <div class="continue-34-wrapper" id="submit-btn">
+      <b class="continue-34">CONTINUE 3/4</b>
+    </div>
+    <div class="interests-item"></div>
+    <div class="interests-inner"></div>
     <% end %>
   </div>
   <script>
