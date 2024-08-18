@@ -9,7 +9,7 @@
 <body>
     <div class="forgot-password">
         <div class="group-parent">
-            <img class="arrow-icon" alt="" src="/assets/Arrow.svg">
+            <img class="arrow-icon" alt="" src="/assets/Arrow.svg" onclick="window.location.href='<%= new_user_session_path %>';">
             <%= render "devise/shared/error_messages", resource: resource %>
             <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
             <div class="group-container">
@@ -35,8 +35,6 @@
     </div>
 </body>
 </html>
-
-
 
 <style type="text/css">
   .border {
@@ -157,12 +155,12 @@
     width: 335px;
     height: 56px;
     border: none;
-}
-.reset-password {
-    position: absolute;
-    top: 18px;
-    left: 116px;
-    line-height: 20px;
+    color: #fff; /* Make the button text white */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 .rectangle-parent {
     position: absolute;
@@ -184,6 +182,7 @@
     width: 335px;
     height: 56px;
     border: none;
+    padding-left: 10px;
 }
 .rectangle-wrapper {
     position: absolute;
@@ -200,10 +199,6 @@
     transform: translateX(-50%);
     width: 335px;
     height: 278px;
-}
-.forgot-password .group-container .reset-password {
-    display: block; /* Ensure the button takes full width */
-    margin: 0 auto; /* Center the button */
 }
 .group-parent {
     position: absolute;
@@ -254,9 +249,11 @@
 .devise-links {
     position: absolute;
     top: 430px; /* Adjust this value as needed */
-    left: 50%;
-    transform: translateX(-90%);
+    left: 60%;
+    transform: translateX(-50%);
     width: 335px;
+    display: flex;
+    justify-content: space-between; /* Ensure links are spread out */
 }
 a {
     color: #ff7029; /* Adjust color as needed */
@@ -265,5 +262,4 @@ a {
 a:hover {
     text-decoration: underline; /* Add hover effect if needed */
 }
-
 </style>

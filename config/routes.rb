@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: 'sessions' }
+  post 'check_email', to: 'registrations#check_email'
 
   authenticated :user do
     root 'profiles#setup', as: :authenticated_root
