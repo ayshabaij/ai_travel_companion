@@ -98,7 +98,7 @@ class TripsController < ApplicationController
   private
 
   def validate_korean_address(address)
-    api_key = 'AIzaSyAbuiEydNDprEdZYceftCThgasF8M6txOE'
+    api_key = ENV['API_KEY']
     geocode_url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{CGI.escape(address)}&key=#{api_key}"
 
     uri = URI.parse(geocode_url)
