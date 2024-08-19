@@ -170,3 +170,10 @@ AI App
   FIne Tuning doc -  https://colab.research.google.com/drive/1WrM_mfupNIVE7RL8SGL5P8z6EUySHJKb?usp=drive_link
  
 
+More Info
+---------
+
+Location recomendation system uses Predibase solar model , https://app.predibase.com/ - implemented in backend app - travel_app_backend/index.rb
+
+
+Chatbot used solar model from upstage website https://console.upstage.ai/login?redirect=%2Fapi-keys - Implemented in the main rails app - app/controller/pages_controller.rb
