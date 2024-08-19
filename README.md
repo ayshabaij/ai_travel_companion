@@ -88,6 +88,8 @@ Setting Up the Main Rails App
 		- node -v
 		- yarn -v 
 
+  - rails assets:precompile 
+
   - Set Up Environment Variables
 
 
