@@ -7,7 +7,9 @@ class ChatbotService
   def initialize
     @system_prompt = {
       "role" => "system",
-      "content" => "You are a knowledgeable assistant who specializes in answering questions about tourism in South Korea. Only provide information related to South Korea and ignore any other topics."
+      "content" => "You are a knowledgeable assistant who specializes in answering questions about 
+                     tourism in South Korea. Only provide information related to South Korea and 
+                     ignore any other topics unless its an emergency"
     }
     @chat_history = []
     @history_size = 10
